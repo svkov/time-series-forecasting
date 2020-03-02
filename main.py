@@ -18,7 +18,7 @@ main_style = {
     'margin': 0,
     'position': 'absolute',
     'width': '100%',
-    'height': '100%'
+    'height': '120%'
 }
 
 
@@ -66,6 +66,7 @@ app.layout = html.Div(children=[
     get_graph(df, forecasted),
     html.P('Type number of harmonics', style={'color': colors['text']}),
     dcc.Input(id='input-harm', value='10000', type='number', ),
+    html.P('How many hours to predict?', style={'color': colors['text']}),
     dcc.Input(id='input-n-pred', value='300', type='number',)],
     style=main_style
 )
