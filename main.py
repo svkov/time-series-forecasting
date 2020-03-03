@@ -1,25 +1,28 @@
-import pandas as pd
-
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import pandas as pd
 from dash.dependencies import Input, Output
-from forecasting import fourierExtrapolation, forecaft_df, get_indexes_for_prediction
+
+from forecasting import forecaft_df, get_indexes_for_prediction
 
 colors = {
     'background': '#111111',
     'text': '#7FDBFF'
 }
 
-main_style = {
-    'backgroundColor': colors['background'],
-    'top': 0,
-    'left': 0,
-    'margin': 0,
-    'position': 'absolute',
-    'width': '100%',
-    'height': '120%'
-}
+
+def get_input(id, value, type='number'):
+    return html.Div(dcc.Input(id=id, value=value, type=type, className='input'), className='input-div')
+
+
+def get_input_block():
+    return html.Div([
+        html.P('Type number of harmonics', className='text'),
+        get_input(id='input-harm', value='10000'),
+        html.P('How many hours to predict?', className='text'),
+        get_input(id='input-n-pred', value='300'),
+    ], className='input_div')
 
 
 def load_data(start_from=80000):
@@ -50,7 +53,8 @@ def get_figure(df, forecasted):
 
 
 def get_graph(df, forecasted):
-    return dcc.Graph(id='plot', style=colors, figure=get_figure(df, forecasted))
+    return dcc.Graph(id='plot', figure=get_figure(df, forecasted))
+
 
 # TODO: Remove global variables
 n_pred = 300
@@ -60,16 +64,9 @@ app = dash.Dash(__name__)
 forecasted = forecast(n_pred=n_pred, harm=harm)
 
 app.layout = html.Div(children=[
-    html.H1('BTC Price Analysis',
-            style={'color': colors['text'],
-                   'textAlign': 'center'}),
-    get_graph(df, forecasted),
-    html.P('Type number of harmonics', style={'color': colors['text']}),
-    dcc.Input(id='input-harm', value='10000', type='number', ),
-    html.P('How many hours to predict?', style={'color': colors['text']}),
-    dcc.Input(id='input-n-pred', value='300', type='number',)],
-    style=main_style
-)
+    html.H1('BTC Price Analysis', className='text'),
+    get_input_block(),
+    get_graph(df, forecasted)], id='main-container')
 
 
 @app.callback(

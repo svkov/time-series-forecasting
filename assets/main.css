@@ -1,0 +1,30 @@
+#main-container{
+    background-color: #111111;
+    top: 0;
+    left: 0;
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    height: 120%;
+}
+
+#plot{
+    background-color: #111111;
+    color: #7FDBFF;
+}
+
+.text{
+    text-align: center;
+    color: #7FDBFF;
+}
+
+.input{
+    background-color: #111111;
+    color: #7FDBFF;
+    text-align: center;
+}
+
+.input-div{
+    text-align: center;
+    display: block;
+}
