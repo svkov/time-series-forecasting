@@ -28,7 +28,7 @@ def fourierExtrapolation(x, n_predict, n_harm=10):
 
 
 def forecaft_df_to_future(df, n_pred, n_harm=10000, start_from=60000, last_n_values=None):
-    val = df['avg'].values[start_from:]
+    val = df['close'].values[start_from:]
     y1 = val
     y2 = fourierExtrapolation(val, n_predict=n_pred, n_harm=n_harm)
     y2_hat = y2[-n_pred:] - (y2[-n_pred] - y1[-1])
@@ -51,7 +51,7 @@ def mean_absolute_percentage_error(y_true, y_pred):
 
 
 def get_forecast_test(df, n_harm=10000, start_from=0, train_size=0.8):
-    val = df['avg'].values[start_from:]
+    val = df['close'].values[start_from:]
     train, test = train_test_split(val, shuffle=False, train_size=train_size)
     n_pred = len(test)
     y_forecast = fourierExtrapolation(train, n_predict=n_pred, n_harm=n_harm)[-n_pred:]

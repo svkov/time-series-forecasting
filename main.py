@@ -1,59 +1,60 @@
 import dash
-import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output
 import pandas as pd
+from dash.dependencies import Input, Output, State
 
-from dash_src.layout import get_input_block, get_graph, get_metrics, get_figure_to_future
-from forecasting import forecaft_df_to_future, get_indexes_for_prediction, forecast_train_test_df, get_forecast_test, \
-    calculate_metrics
-
-
-def load_data(start_from=80000):
-    df = pd.read_csv('btcusd_full_hour_2020_02_01.csv', index_col='date')
-    df = df[start_from:]
-    return df
+from dash_src.layout import Layout
+from data import load_data
+from forecasting import forecaft_df_to_future
 
 
-def forecast(n_pred, harm=10000):
-    global df
+def forecast(df, n_pred, harm=10000):
     forecasted = forecaft_df_to_future(df, n_pred=n_pred, n_harm=harm, start_from=0)
     return forecasted
 
 
-# TODO: Remove global variables
-n_pred = 300
-harm = 100000
-train_size = 0.99
-df = load_data(start_from=80000)
-app = dash.Dash(__name__)
-forecasted = forecast(n_pred=n_pred, harm=harm)
+def get_layout():
+    n_pred = 300
+    n_harm = 100000
+    train_size = 0.99
+    df = load_data()
+    forecasted = forecast(df, n_pred, n_harm)
+    layout = Layout(df)
 
-app.layout = html.Div(children=[
-    html.H1('BTC Price Analysis', className='text', id='title'),
-    get_input_block(),
-    get_graph(df, forecasted),
-    get_metrics(df, n_harm=harm, train_size=train_size)
-], id='main-container')
+    final = html.Div(children=[
+        html.H1('BTC Price Analysis', className='text', id='title'),
+        layout.get_layout(forecasted, n_pred, train_size, n_harm)
+    ], id='main-container')
+    return final
+
+
+# TODO: Remove global variables
+
+
+app = dash.Dash(__name__)
+app.layout = get_layout
 
 
 @app.callback(
-    Output(component_id='plot', component_property='figure'),
-    [Input(component_id='input-harm', component_property='value'),
-     Input(component_id='input-n-pred', component_property='value')]
+    Output('plot', 'figure'),
+    [Input('input-harm', 'value'),
+     Input('input-n-pred', 'value')],
+    [State('data', 'children'),]
+     # State('input-harm', 'value'),
+     # State('input-n-pred', 'value')]
 )
-def update_harm_number(new_harm=None, new_n_pred=None):
-    global harm, n_pred
-    if new_harm:
-        new_harm = int(new_harm)
-        harm = new_harm
-    if new_n_pred:
-        new_n_pred = int(new_n_pred)
-        n_pred = new_n_pred
-    forecasted = forecast(n_pred=harm, harm=n_pred)
-    return get_figure_to_future(df, forecasted, n_pred)
-    # train-test graph
-    # return get_figure_train_test(df, train_size=train_size)
+def update_harm_number(n_harm, n_pred, json_str):
+    data = pd.read_json(json_str)
+    if n_harm:
+        n_harm = int(n_harm)
+    else:
+        n_harm = 1
+    if n_pred:
+        n_pred = int(n_pred)
+    else:
+        n_pred = 1
+    forecasted = forecast(data, int(n_harm), int(n_pred))
+    return Layout.get_figure_to_future(data, forecasted, int(n_pred))
 
 
 if __name__ == '__main__':
