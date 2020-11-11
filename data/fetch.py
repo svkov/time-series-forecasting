@@ -14,7 +14,7 @@ class DataFetcher:
 
     @property
     def url(self):
-        return f'https://min-api.cryptocompare.com/data/v2/histo{self.freq_type}?fsym={self.fsym}&tsym={self.tsym}&limit={self.limit}&api_key={api_key}&all_data=true'
+        return f'https://min-api.cryptocompare.com/data/v2/histo{self.freq_type}?fsym={self.fsym}&tsym={self.tsym}&limit={self.limit}&api_key={self.api_key}&all_data=true'
 
     @staticmethod
     def get_df_from_url(url):
@@ -31,7 +31,7 @@ class DataFetcher:
         return f'{self.url}&toTs={min_timestamp}'
 
     def fetch(self, max_iter):
-        df = get_df_from_url(self.url)
+        df = self.get_df_from_url(self.url)
         for i in range(max_iter):
             min_timestamp = df['time'].min()
             url_timestamp = self.get_url_timestamp(min_timestamp)
