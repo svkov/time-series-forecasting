@@ -83,5 +83,4 @@ class Layout:
     def get_layout(self, forecasted, n_pred, train_size, n_harm):
         return html.Div([self.get_input_block(),
                          self.get_graph(forecasted, n_pred),
-                         self.data(),
-                         self.get_metrics(n_harm=n_harm, train_size=train_size)])
+                         self.get_metrics(n_harm=n_harm, train_size=train_size)], className='page-content')
