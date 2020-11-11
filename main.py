@@ -95,7 +95,7 @@ app = dash.Dash(__name__)
 forecasted = forecast(n_pred=n_pred, harm=harm)
 
 app.layout = html.Div(children=[
-    html.H1('BTC Price Analysis', className='text'),
+    html.H1('BTC Price Analysis', className='text', id='title'),
     get_input_block(),
     get_graph(df, forecasted),
     get_metrics(df, n_harm=harm, train_size=train_size)

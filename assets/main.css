@@ -1,3 +1,7 @@
+body{
+    background-color: #111111;
+}
+
 #main-container{
     background-color: #111111;
     top: 0;
@@ -27,4 +31,8 @@
 .input-div{
     text-align: center;
     display: block;
+}
+
+#title{
+    margin: 30px;
 }
