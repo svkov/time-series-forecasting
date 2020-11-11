@@ -28,31 +28,30 @@ def get_layout():
     return final
 
 
-# TODO: Remove global variables
-
-
 app = dash.Dash(__name__)
 app.layout = get_layout
+
+
+def process_int_arg(arg, default_val=1):
+    if arg:
+        return int(arg)
+    return default_val
+
+
+def process_json_to_df_arg(arg):
+    return pd.read_json(arg)
 
 
 @app.callback(
     Output('plot', 'figure'),
     [Input('input-harm', 'value'),
      Input('input-n-pred', 'value')],
-    [State('data', 'children'),]
-     # State('input-harm', 'value'),
-     # State('input-n-pred', 'value')]
+    [State('data', 'children')]
 )
 def update_harm_number(n_harm, n_pred, json_str):
-    data = pd.read_json(json_str)
-    if n_harm:
-        n_harm = int(n_harm)
-    else:
-        n_harm = 1
-    if n_pred:
-        n_pred = int(n_pred)
-    else:
-        n_pred = 1
+    data = process_json_to_df_arg(json_str)
+    n_harm = process_int_arg(n_harm)
+    n_pred = process_int_arg(n_pred)
     forecasted = forecast(data, int(n_harm), int(n_pred))
     return Layout.get_figure_to_future(data, forecasted, int(n_pred))
 
