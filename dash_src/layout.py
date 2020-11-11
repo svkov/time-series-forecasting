@@ -2,7 +2,6 @@ import dash_core_components as dcc
 import dash_html_components as html
 
 from forecasting import forecast_train_test_df, get_indexes_for_prediction, get_forecast_test
-from data import load_data
 
 
 class Layout:
@@ -79,8 +78,7 @@ class Layout:
         )
 
     def data(self):
-        df = load_data()
-        return html.Div(df.to_json(), id='data', style={'display': 'None'})
+        return html.Div(self.df.to_json(), id='data', style={'display': 'None'})
 
     def get_layout(self, forecasted, n_pred, train_size, n_harm):
         return html.Div([self.get_input_block(),

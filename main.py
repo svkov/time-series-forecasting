@@ -17,7 +17,8 @@ def get_layout():
     n_pred = 300
     n_harm = 100000
     train_size = 0.99
-    df = load_data()
+    freq_type = 'hour'
+    df = load_data(freq_type)
     forecasted = forecast(df, n_pred, n_harm)
     layout = Layout(df)
 
