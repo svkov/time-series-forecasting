@@ -1,4 +1,4 @@
 tickers: [ES, BTC-USD, ETH-USD]
-models: [fourier, wavelet, baseline, test]
+models: [test, fourier, wavelet, baseline]
 n_pred: '30'
 date_start: '2020-10-08'

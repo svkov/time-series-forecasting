@@ -9,5 +9,6 @@ rule all:
     input:
         expand('reports/figures_raw/{ticker}.png', ticker=config['tickers']),
         expand('reports/forecast_{model}/{ticker}.csv', ticker=config['tickers'], model=config['models']),
+        expand('reports/figures_pred/{ticker}.png', ticker=config['tickers'])
     shell:
          'echo Ready'
