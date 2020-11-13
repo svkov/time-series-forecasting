@@ -4,3 +4,5 @@
 /.snakemake/
 /.vscode/
 /.virtual_documents/
+*.pdf
+*.log

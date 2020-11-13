@@ -8,3 +8,9 @@ rule plot_pred:
     params: models=config['models'], path_to_pred='reports/forecast_'
     output: 'reports/figures_pred/{ticker}.png'
     shell: 'python -m src.plots.plot_pred --input {input[0]} --output {output} --models "{params.models}" --name {wildcards.ticker} --path_to_pred {params.path_to_pred}'
+
+rule generate_latex:
+    input:
+        expand('reports/figures_pred/{ticker}.png', ticker=config['tickers'])
+    output: 'reports/latex/diploma.tex'
+    shell: 'python -m src.latex.generate_target_file --input "{input}" --output {output}'
