@@ -8,6 +8,7 @@ rule all:
     input:
         expand('reports/figures_raw/{ticker}.png', ticker=config['tickers']),
         expand('reports/forecast_fourier/{ticker}.csv', ticker=config['tickers']),
-        expand('reports/forecast_wavelet/{ticker}.csv', ticker=config['tickers'])
+        expand('reports/forecast_wavelet/{ticker}.csv', ticker=config['tickers']),
+        expand('reports/forecast_baseline/{ticker}.csv', ticker=config['tickers'])
     shell:
          'echo Ready'
