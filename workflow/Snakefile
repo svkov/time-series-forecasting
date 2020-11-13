@@ -3,6 +3,7 @@ configfile: 'workflow/config.yaml' # noqa
 include: 'rules/download_data.smk'
 include: 'rules/forecast.smk'
 include: 'rules/reports.smk'
+include: 'rules/process_data.smk'
 
 rule all:
     input:
