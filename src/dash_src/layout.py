@@ -1,7 +1,7 @@
 import dash_core_components as dcc
 import dash_html_components as html
 
-from forecasting import forecast_train_test_df, get_indexes_for_prediction, get_forecast_test
+from src.forecasting import forecast_train_test_df, get_indexes_for_prediction, get_forecast_test
 
 
 class Layout:

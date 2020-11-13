@@ -6,9 +6,9 @@ import dash_core_components as dcc
 
 from app import app
 
-from data import load_data
-from dash_src.layout import Layout
-from forecasting import forecaft_df_to_future
+from src.data import load_data
+from src.dash_src.layout import Layout
+from src.forecasting import forecaft_df_to_future
 
 
 def forecast(df, n_pred, harm=10000):

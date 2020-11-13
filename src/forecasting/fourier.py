@@ -2,13 +2,11 @@ import os
 import pandas as pd
 import numpy as np
 
-import matplotlib.pyplot as plt
-
 from numpy import fft
 
-from utils import get_grid_from_dict, get_nmape, mean_absolute_percentage_error, transform_date_start
+from src.utils import get_grid_from_dict, get_nmape, transform_date_start
 
-from forecasting.model import Model
+from src.forecasting import Model
 
 
 def get_predict(x, n=14, n_harm=1000, trend_deg=1):

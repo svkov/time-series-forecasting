@@ -1,6 +1,6 @@
-from data.fetch import DataFetcher
 import datetime
 import pandas as pd
+# from src.data import DataFetcher
 
 
 def get_name(freq_type):
@@ -30,10 +30,10 @@ def fetch_all_data(freq_type: str):
     try:
         with open('api_key.txt', 'r') as f:
             key = f.read()
-            fetcher = DataFetcher(key, freq_type=freq_type)
-            df = fetcher.fetch(1)
-            df.to_csv(get_name(freq_type))
-            return df
+            # fetcher = DataFetcher(key, freq_type=freq_type)
+            # df = fetcher.fetch(1)
+            # df.to_csv(get_name(freq_type))
+            # return df
     except FileNotFoundError:
         raise FileNotFoundError('Создайте файл api_key.txt и запишите туда ключ API')
 

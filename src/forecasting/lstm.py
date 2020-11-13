@@ -3,7 +3,6 @@ import os
 import datetime
 from collections import namedtuple
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import sklearn.preprocessing
@@ -11,9 +10,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from sklearn.metrics import mean_squared_error
 from dateutil.relativedelta import relativedelta
-from forecasting.model import Model
+from src.forecasting import Model
 
 SavedFit = namedtuple('SavedFit', 'filename date_test_start datetime_fit mape')
 

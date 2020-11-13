@@ -1,0 +1,9 @@
+configfile: 'workflow/config.yaml' # noqa
+
+include: 'rules/download_data.smk'
+
+rule all:
+    input:
+          expand('data/raw/data_{ticker}.csv', ticker=config['tickers'])
+    shell:
+         'echo Ready'

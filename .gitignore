@@ -1,3 +1,5 @@
 .ipynb_checkpoints
 .idea
-/forecasting/__pycache__
+/src/forecasting/__pycache__
+/.snakemake/
+/.vscode/

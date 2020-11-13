@@ -3,7 +3,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 
 from app import app
-from apps import crypto_app
+from src.apps import crypto_app
 
 
 app.layout = html.Div([
