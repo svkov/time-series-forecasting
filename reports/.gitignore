@@ -1,0 +1,9 @@
+/figures_raw/*.png
+/forecast_fourier/*.csv
+/forecast_wavelet/*.csv
+*.csv
+*.xlsx
+*.png
+*.svg
+*.jpg
+*.html

@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from src.utils import transform_date_start
-from src.forecasting import Model
+from src.models.model import Model
 
 
 class Baseline(Model):

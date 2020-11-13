@@ -11,7 +11,7 @@ import torch.nn as nn
 import torch.optim as optim
 
 from dateutil.relativedelta import relativedelta
-from src.forecasting import Model
+from src.models import Model
 
 SavedFit = namedtuple('SavedFit', 'filename date_test_start datetime_fit mape')
 
@@ -24,7 +24,7 @@ def r2_score(y_test, y_pred, torch_order=False):
     elif isinstance(y_test, torch.Tensor) and isinstance(y_pred, torch.Tensor):
         return 1 - torch.mean((y_test - y_pred) ** 2).item() / torch.mean((y_test - torch.mean(y_test)) ** 2).item()
     else:
-        raise TypeError(f"input array must be np.ndarray or torch.Tensor, got {type(y_test)}, {type(y_pred)}")
+        raise TypeError(f"input_ array must be np.ndarray or torch.Tensor, got {type(y_test)}, {type(y_pred)}")
 
 
 def mean_absolute_percent_error(y_test, y_pred, torch_order=False):
@@ -35,7 +35,7 @@ def mean_absolute_percent_error(y_test, y_pred, torch_order=False):
     elif isinstance(y_test, torch.Tensor) and isinstance(y_pred, torch.Tensor):
         return torch.mean(torch.abs((y_test - y_pred) / y_test)) * 100
     else:
-        raise TypeError(f"input array must be np.ndarray or torch.Tensor, got {type(y_test)}, {type(y_pred)}")
+        raise TypeError(f"input_ array must be np.ndarray or torch.Tensor, got {type(y_test)}, {type(y_pred)}")
 
 
 class LSTM(Model):
@@ -101,7 +101,7 @@ class LSTM(Model):
             sched_step_size (int, optional): lr_scheduler.StepLR step size. Defaults to 10.
             sched_gamma (float, optional): lr_scheduler.StepLR gamma. Defaults to 0.5.
             model_params (dict, optional): dict of params = args to model init. Defaults to dict of 3 params below.
-            model_input_size (int, optional): param of Model, num input features. Defaults to 1.
+            model_input_size (int, optional): param of Model, num input_ features. Defaults to 1.
             model_hidden_size (int, optional): param of Model, size of hidden layers. Defaults to 300.
             model_output_size (int, optional): param of Model, size of output. Defaults to 1.
             scaler (sklearn.preprocessing.*Scaler, optional): class Scaler for features. Defaults to sklearn.preprocessing.StandardScaler.

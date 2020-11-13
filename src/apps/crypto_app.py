@@ -8,7 +8,7 @@ from app import app
 
 from src.data import load_data
 from src.dash_src.layout import Layout
-from src.forecasting import forecaft_df_to_future
+from src.models import forecaft_df_to_future
 
 
 def forecast(df, n_pred, harm=10000):
@@ -51,8 +51,8 @@ def process_json_to_df_arg(arg):
 
 @app.callback(
     Output('plot', 'figure'),
-    [Input('input-harm', 'value'),
-     Input('input-n-pred', 'value')],
+    [Input('input_-harm', 'value'),
+     Input('input_-n-pred', 'value')],
     [State('data', 'children')]
 )
 def update_harm_number(n_harm, n_pred, json_str):

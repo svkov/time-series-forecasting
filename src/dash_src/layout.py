@@ -1,7 +1,7 @@
 import dash_core_components as dcc
 import dash_html_components as html
 
-from src.forecasting import forecast_train_test_df, get_indexes_for_prediction, get_forecast_test
+from src.models import forecast_train_test_df, get_indexes_for_prediction, get_forecast_test
 
 
 class Layout:
@@ -16,13 +16,13 @@ class Layout:
     def get_input(self, id, value, text, type='number'):
         return html.Div([
             html.P(text, className='text'),
-            html.Div(dcc.Input(id=id, value=value, type=type, className='input'), className='input-div')
+            html.Div(dcc.Input(id=id, value=value, type=type, className='input_'), className='input_-div')
         ])
 
     def get_input_block(self):
         return html.Div([
-            self.get_input(id='input-harm', value='10000', text='Type number of harmonics'),
-            self.get_input(id='input-n-pred', value='300', text='How many hours to predict?'),
+            self.get_input(id='input_-harm', value='10000', text='Type number of harmonics'),
+            self.get_input(id='input_-n-pred', value='300', text='How many hours to predict?'),
         ], className='input_div')
 
     @staticmethod
