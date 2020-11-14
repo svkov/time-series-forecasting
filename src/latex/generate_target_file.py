@@ -49,7 +49,7 @@ def generate(input, output):
     figs = [generate_figure(f'../{path}', name, f'graph{i}') for i, path in enumerate(path_to_figures)]
     body = concat_parts(*figs)
     # tex = generate_header(body)
-    with open(output, 'w') as f:
+    with open(output, 'w', encoding='utf-8') as f:
         f.write(body)
 
 
