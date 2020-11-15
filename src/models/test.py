@@ -1,5 +1,9 @@
+from datetime import timedelta
+
 from src.models.model import Model
 import pandas as pd
+
+from src.utils import transform_date_start
 
 
 class Test(Model):
@@ -19,3 +23,20 @@ class Test(Model):
             raise ValueError('Невозможно сгенерировать тест по таким данным!')
 
         return X.loc[date_range, self.column_name]
+
+    def predict_for_report(self, X, date_start, date_end):
+        X = X[self.column_name]
+        index = pd.date_range(date_start, date_end)
+
+        preds = []
+        for pivot in index:
+
+            signal = X.loc[pivot:pivot + timedelta(days=self.n - 1)].dropna().values
+            preds.append(signal)
+
+        date_start = transform_date_start(date_start, self.n)
+        date_end = transform_date_start(date_end, self.n)
+        # dates = X[date_start:date_end].index
+        dates = pd.date_range(date_start, date_end)
+        columns = [f'n{i + 1}' for i in range(self.n)]
+        return pd.DataFrame(preds, index=dates, columns=columns)

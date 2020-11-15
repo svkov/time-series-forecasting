@@ -29,8 +29,10 @@ def plot_raw(input, output, name, models, path_to_pred):
     results = pd.DataFrame(columns=model_names)
     for result, model in zip(model_results, model_names):
         path = os.path.join(result, f'{name}.csv')
-        df = pd.read_csv(path, parse_dates=True, index_col='Date')
-        results[model] = df.Prediction
+        df = pd.read_csv(path, parse_dates=True, index_col=0)
+        series = pd.Series(df.values[:, -1], index=df.index)
+        results[model] = series
+    print(results)
     fig = get_fig(results, name)
     save_fig(fig, output)
 
