@@ -4,6 +4,7 @@ from src.models.arima import ARIMA
 from src.models.baseline import Baseline
 from src.models.fourier import Fourier
 from src.models.test import Test
+from src.models.var import MyVAR
 from src.models.wavelet import Wavelet
 
 
@@ -32,10 +33,16 @@ def forecast_wavelet(df: pd.DataFrame, n_pred: int, date_start: str, date_end: s
     return model.predict_for_report(df, date_start, date_end)
 
 
+def forecast_var(df: pd.DataFrame, n_pred: int, date_start: str, date_end: str) -> pd.DataFrame:
+    model = MyVAR(df, n=n_pred)
+    return model.predict_for_report(df, date_start, date_end)
+
+
 models = {
     'arima': forecast_arima,
     'baseline': forecast_baseline,
     'test': forecast_test,
     'fourier': forecast_fourier,
-    'wavelet': forecast_wavelet
+    'wavelet': forecast_wavelet,
+    'var': forecast_var
 }

@@ -1,5 +1,5 @@
 tickers: [ES, BTC-USD, ETH-USD]
-models: [test, fourier, wavelet, baseline, arima]
+models: [test, fourier, wavelet, baseline, arima, var]
 n_pred: '10'
 date_start: '2020-06-01'
 date_end: '2020-07-01'

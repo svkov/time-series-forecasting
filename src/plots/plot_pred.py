@@ -37,7 +37,9 @@ def plot_raw(input, output, name, models, path_to_pred, n_pred):
     for result, model in zip(model_results, model_names):
         path = os.path.join(result, f'{name}.csv')
         df = pd.read_csv(path, parse_dates=True, index_col=0)
-        series = pd.Series(df.values[:, -1], index=df.index)
+        if model == 'var':
+            df = df.filter(like=f'{name} Close')
+        series = pd.Series(df.values[:, -1], index=df.index)  # фильтровать по name
         results[model] = series
     fig = get_fig(results, name, metric=mean_absolute_error, n_pred=n_pred)
     save_fig(fig, output)
