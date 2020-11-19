@@ -3,14 +3,6 @@ import pandas as pd
 
 from src.forecasting.forecasting_methods import *
 
-models = {
-    'arima': forecast_arima,
-    'baseline': forecast_baseline,
-    'test': forecast_test,
-    'fourier': forecast_fourier,
-    'wavelet': forecast_wavelet
-}
-
 
 @click.command()
 @click.option('--input')

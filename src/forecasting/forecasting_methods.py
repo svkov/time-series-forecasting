@@ -30,3 +30,12 @@ def forecast_test(df: pd.DataFrame, n_pred: int, date_start: str, date_end: str)
 def forecast_wavelet(df: pd.DataFrame, n_pred: int, date_start: str, date_end: str) -> pd.DataFrame:
     model = Wavelet(df, n=n_pred, column_name='Close')
     return model.predict_for_report(df, date_start, date_end)
+
+
+models = {
+    'arima': forecast_arima,
+    'baseline': forecast_baseline,
+    'test': forecast_test,
+    'fourier': forecast_fourier,
+    'wavelet': forecast_wavelet
+}
