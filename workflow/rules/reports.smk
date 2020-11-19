@@ -15,3 +15,8 @@ rule generate_latex:
     output: 'reports\\diploma.tex'
     shell:
         'python -m src.latex.generate_target_file --input "{input}" --output {output}'
+
+rule generate_all:
+    input: 'reports\\diploma.tex'
+    output: 'spbu_diploma\\main_example.pdf'
+    shell: 'python spbu_diploma\\generate.py'
