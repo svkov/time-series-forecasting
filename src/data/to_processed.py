@@ -23,6 +23,9 @@ def aggregate(files) -> pd.DataFrame:
     for key, df in data.items():
         res[f'{key} Open'] = df['Open']
         res[f'{key} Close'] = df['Close']
+        res[f'{key} High'] = df['High']
+        res[f'{key} Low'] = df['Low']
+        res[f'{key} Volume'] = df['Volume']
     return res
 
 
