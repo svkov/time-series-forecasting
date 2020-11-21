@@ -8,41 +8,34 @@ from src.models.var import MyVAR
 from src.models.wavelet import Wavelet
 
 
-def forecast_arima(df: pd.DataFrame, n_pred: int, date_start: str, date_end: str) -> pd.DataFrame:
-    model = ARIMA(df, n=n_pred, column_name='Close')
-    return model.predict_for_report(df, date_start, date_end)
+class Forecaster:
+
+    def __init__(self, model_type):
+        self.model_type = model_type
+
+    def _model(self, df, n, column_name, **kwargs):
+        return self.model_type(df, n=n, column_name=column_name, **kwargs)
+
+    def get_model(self, df, n, column_name):
+        return self._model(df, n, column_name)
+
+    def forecast(self, df, n_pred, column_name, date_start, date_end):
+        return self.get_model(df, n_pred, column_name).predict_for_report(df, date_start, date_end)
 
 
-def forecast_baseline(df: pd.DataFrame, n_pred: int, date_start: str, date_end: str) -> pd.DataFrame:
-    model = Baseline(n=n_pred, column_name='Close')
-    return model.predict_for_report(df, date_start, date_end)
+class FourierForecaster(Forecaster):
+    def __init__(self):
+        super().__init__(Fourier)
 
-
-def forecast_fourier(df: pd.DataFrame, n_pred: int, date_start: str, date_end: str) -> pd.DataFrame:
-    model = Fourier(df, n_harm=1, trend_deg=0, n=n_pred, column_name='Close')
-    return model.predict_for_report(df, date_start, date_end)
-
-
-def forecast_test(df: pd.DataFrame, n_pred: int, date_start: str, date_end: str) -> pd.DataFrame:
-    model = Test(df, n=n_pred, column_name='Close')
-    return model.predict_for_report(df, date_start, date_end)
-
-
-def forecast_wavelet(df: pd.DataFrame, n_pred: int, date_start: str, date_end: str) -> pd.DataFrame:
-    model = Wavelet(df, n=n_pred, column_name='Close')
-    return model.predict_for_report(df, date_start, date_end)
-
-
-def forecast_var(df: pd.DataFrame, n_pred: int, date_start: str, date_end: str) -> pd.DataFrame:
-    model = MyVAR(df, n=n_pred)
-    return model.predict_for_report(df, date_start, date_end)
+    def get_model(self, df, n, column_name):
+        return self._model(df, n, column_name, n_harm=1, trend_deg=0)
 
 
 models = {
-    'arima': forecast_arima,
-    'baseline': forecast_baseline,
-    'test': forecast_test,
-    'fourier': forecast_fourier,
-    'wavelet': forecast_wavelet,
-    'var': forecast_var
+    'arima': Forecaster(ARIMA),
+    'baseline': Forecaster(Baseline),
+    'test': Forecaster(Test),
+    'fourier': FourierForecaster(),
+    'wavelet': Forecaster(Wavelet),
+    'var': Forecaster(MyVAR)
 }

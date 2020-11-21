@@ -8,6 +8,7 @@ from typing import Callable
 
 
 def get_fig(df: pd.DataFrame, name: str, metric: Callable, n_pred: str) -> go.Figure:
+    print(df)
     plots = []
     for col in df.columns:
         if col == 'test':
@@ -37,8 +38,7 @@ def plot_raw(input, output, name, models, path_to_pred, n_pred):
     for result, model in zip(model_results, model_names):
         path = os.path.join(result, f'{name}.csv')
         df = pd.read_csv(path, parse_dates=True, index_col=0)
-        if model == 'var':
-            df = df.filter(like=f'{name} Close')
+        # if model == 'var':
         series = pd.Series(df.values[:, -1], index=df.index)  # фильтровать по name
         results[model] = series
     fig = get_fig(results, name, metric=mean_absolute_error, n_pred=n_pred)

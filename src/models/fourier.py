@@ -86,13 +86,13 @@ class Fourier(Model):
     def end_date_train(self):
         return self.df_train.index[-self.n]
 
-    def predict_for_report(self, df, date_start, date_end):
-        self.check_price_in_df(df, self.column_name)
-        predictor = FourierPredictor(df, self.n, column_name=self.column_name)
-        preds = predictor.get_predictions(pd.date_range(date_start, date_end), **self.params)
-        columns = self.get_columns_for_report()
-        index = self.get_index_for_report(df, date_start, date_end)
-        return pd.DataFrame(preds, columns=columns, index=index)
+    # def predict_for_report(self, df, date_start, date_end):
+    #     self.check_price_in_df(df, self.column_name)
+    #     predictor = FourierPredictor(df, self.n, column_name=self.column_name)
+    #     preds = predictor.get_predictions(pd.date_range(date_start, date_end), **self.params)
+    #     columns = self.get_columns_for_report()
+    #     index = self.get_index_for_report(df, date_start, date_end)
+    #     return pd.DataFrame(preds, columns=columns, index=index)
 
     def get_index_for_report(self, df, date_start, date_end):
         date_start_report = transform_date_start(date_start, self.n)
@@ -270,8 +270,8 @@ if __name__ == "__main__":
     X = pd.DataFrame(X, columns=['price'], index=index)
     model = Fourier(X, n=14, n_harm=[1, 2, 4], trend_deg=1, verbose=True, train_len=400)
     pred = model.predict(X)
-    # plt.plot(range(len(X)), X.values)
-    # plt.plot(range(len(X), len(X) + 140), pred)
+    # plt.plot(range(len(df)), df.values)
+    # plt.plot(range(len(df), len(df) + 140), pred)
     print(model)
 
     res = model.predict_for_report(X, '2020-03-10', '2020-05-20')

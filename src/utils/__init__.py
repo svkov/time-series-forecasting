@@ -110,7 +110,7 @@ def fill_dates_monthly(X, date_column='date', n_months_after_last=0):
     """ Add missing months in time series
 
     Missing date is filled with last day of missing month
-    Adds to X column year_month with string with format '%Y-%m'
+    Adds to df column year_month with string with format '%Y-%m'
 
     :param X: pd.DataFrame with column `date_column`
     :param date_column: columns with dates

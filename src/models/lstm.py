@@ -148,7 +148,7 @@ class LSTM(Model):
         Args:
             X ([pd.DataFrame]): all series to train (and testing model) without Nan
             verbose (bool, optional): if True prints verbose information. Defaults to False.
-            date_test_start (str or datetime): Date for first n_out prediction. Defaults to end of 90% of X.
+            date_test_start (str or datetime): Date for first n_out prediction. Defaults to end of 90% of df.
             force_fit (bool, optional): Fit even if exist saved. Defaults to False.
             load_from_filename (str, optional): Filename load from (without dirname). Defaults to None.
         """
@@ -244,8 +244,8 @@ class LSTM(Model):
         """
         :param X: all series, same as in fit(), but with additional data at the end
         :type X: pd.DataFrame or np.ndarray
-        :param dates_from_predict: indexes of days in X to predict
-                                 if None predicts for last date in X
+        :param dates_from_predict: indexes of days in df to predict
+                                 if None predicts for last date in df
         :return: np.array if predictions for each day in dates_to_predict
         """
         n_features = X.shape[1]

@@ -27,7 +27,7 @@ def generate_shapes(len_old, horizont, wt, level):
 
 def predict_wavelet(X, n, forecast, wt='coif1', level=None, plot=False, **forecast_params_list):
     """
-    Предсказывает X на n точек вперед.
+    Предсказывает df на n точек вперед.
     forecast - функция, которая принимает на вход 1d вектор и n, дает предсказание на n точек вперед
     wt - имя вейвлет-функции, по умолчанию coif1, так как показало лучшую метрику
     level - уровень разложения (если None, то берется максимальный)
@@ -82,18 +82,18 @@ def predict_wavelet(X, n, forecast, wt='coif1', level=None, plot=False, **foreca
 
 class Wavelet(Model):
 
-    def __init__(self, X, n=14, level=None, wt='coif1', forecast=None, column_name='price', **params):
+    def __init__(self, df, n=14, level=None, wt='coif1', forecast=None, column_name='price', **params):
         """
         Init model and fit best params.
         Wavelet model fitted by series itself.
 
-        X - df with column `price`
+        df - df with column `price`
         n - horizon of models
         level - how many times to decompose (if None will be set to max level)
         wt - which wavelet function to use from pywt library (if None will be fitted best)
         forecast - method which takes 1d vector and n and return prediction of len n (if None fourier model will be used)
         """
-        super().__init__()
+        super().__init__(df, n, column_name=column_name)
 
         self.column_name = column_name
         self.level = level
@@ -105,31 +105,9 @@ class Wavelet(Model):
             forecast = get_predict
         self.forecast = forecast
 
-    def fit(self, X, verbose=False):
-        pass
-
     def predict(self, X):
         X = X[self.column_name].values
         return predict_wavelet(X, self.n, forecast=self.forecast, wt=self.wt, level=self.level)
-
-    def predict_for_report(self, X, date_start, date_end):
-        n = self.n
-        # dates = X['price'].loc[date_start:date_end].index
-        dates = pd.date_range(date_start, date_end)
-        result = []
-        for start_pivot in dates:
-            full_signal = X.loc[:start_pivot, self.column_name].interpolate().dropna().values
-            train = full_signal[:-n]
-            # print('for report', train.shape)
-            pred = predict_wavelet(train, n, self.forecast, self.wt, self.level, **self.params)
-            result.append(pred)
-
-        columns = [f'n{i + 1}' for i in range(n)]
-
-        date_start = transform_date_start(date_start, n)
-        date_end = transform_date_start(date_end, n)
-        dates = pd.date_range(date_start, date_end)
-        return pd.DataFrame(result, columns=columns, index=dates)
 
 
 if __name__ == '__main__':
@@ -141,11 +119,11 @@ if __name__ == '__main__':
     wt = 'coif1'
     level = None
 
-    # model = Wavelet(X, n=n, wt=wt, level=level, n_harm=n_harm, trend_deg=list(range(5)))
+    # model = Wavelet(df, n=n, wt=wt, level=level, n_harm=n_harm, trend_deg=list(range(5)))
     model = Wavelet(X, n=10)
     pred = model.predict(X)
 
     print(pred)
-    # plt.plot(range(len(X)), X.values)
-    # plt.plot(range(len(X), len(X) + 140), pred)
+    # plt.plot(range(len(df)), df.values)
+    # plt.plot(range(len(df), len(df) + 140), pred)
     # plt.show()
