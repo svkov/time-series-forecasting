@@ -6,9 +6,10 @@ import plotly.graph_objects as go
 from sklearn.metrics import mean_absolute_error
 from typing import Callable
 
+from src.plots import get_results
+
 
 def get_fig(df: pd.DataFrame, name: str, metric: Callable, n_pred: str) -> go.Figure:
-    print(df)
     plots = []
     for col in df.columns:
         if col == 'test':
@@ -31,16 +32,7 @@ def save_fig(fig: go.Figure, path):
 @click.option('--path_to_pred')
 @click.option('--n_pred')
 def plot_raw(input, output, name, models, path_to_pred, n_pred):
-    model_names = models.split()
-    model_results = [path_to_pred + model for model in model_names]
-
-    results = pd.DataFrame(columns=model_names)
-    for result, model in zip(model_results, model_names):
-        path = os.path.join(result, f'{name}.csv')
-        df = pd.read_csv(path, parse_dates=True, index_col=0)
-        # if model == 'var':
-        series = pd.Series(df.values[:, -1], index=df.index)  # фильтровать по name
-        results[model] = series
+    results = get_results(models, path_to_pred, name)
     fig = get_fig(results, name, metric=mean_absolute_error, n_pred=n_pred)
     save_fig(fig, output)
 

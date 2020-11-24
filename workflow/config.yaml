@@ -3,3 +3,4 @@ models: [test, fourier, wavelet, baseline, arima, var]
 n_pred: '10'
 date_start: '2020-09-01'
 date_end: '2020-10-05'
+metrics: [MAE, MAPE]
