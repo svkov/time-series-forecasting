@@ -11,6 +11,7 @@ def save_fig(fig: go.Figure, path):
     fig.write_image(path)
 
 
+@send_to_telegram_if_fails
 @click.command()
 @click.option('--input')
 @click.option('--output')

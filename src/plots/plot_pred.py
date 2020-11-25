@@ -7,6 +7,7 @@ from sklearn.metrics import mean_absolute_error
 from typing import Callable
 
 from src.plots import get_results
+from src.utils import send_to_telegram_if_fails
 
 
 def get_fig(df: pd.DataFrame, name: str, metric: Callable, n_pred: str) -> go.Figure:
@@ -24,6 +25,7 @@ def save_fig(fig: go.Figure, path):
     fig.write_image(path)
 
 
+@send_to_telegram_if_fails
 @click.command()
 @click.option('--input')
 @click.option('--output')

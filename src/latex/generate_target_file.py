@@ -2,6 +2,8 @@ import os
 
 import click
 
+from src.utils import send_to_telegram_if_fails
+
 
 def generate_header(body):
     if not isinstance(body, str):
@@ -40,6 +42,7 @@ def concat_parts(*parts):
     return '\n'.join(parts)
 
 
+@send_to_telegram_if_fails
 @click.command()
 @click.option('--input')
 @click.option('--output')

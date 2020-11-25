@@ -3,7 +3,7 @@ import pandas as pd
 import os
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from src.plots import get_results
-from src.utils import mean_absolute_percentage_error
+from src.utils import mean_absolute_percentage_error, send_to_telegram_if_fails
 
 metrics_map = {
     'MAE': mean_absolute_error,
@@ -28,6 +28,7 @@ def get_metrics_df(results, metrics_list):
     return metrics_df
 
 
+@send_to_telegram_if_fails
 @click.command()
 @click.option('--input')
 @click.option('--output')

@@ -1,7 +1,10 @@
 import click
 import pandas as pd
 
+from src.utils import send_to_telegram_if_fails
 
+
+@send_to_telegram_if_fails
 @click.command()
 @click.option('--input')
 @click.option('--output')

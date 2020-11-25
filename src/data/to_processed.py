@@ -2,6 +2,8 @@ import click
 import os
 import pandas as pd
 
+from src.utils import send_to_telegram_if_fails
+
 
 def path_to_file_to_key(path_to_file):
     filename = os.path.split(path_to_file)[-1]
@@ -29,6 +31,7 @@ def aggregate(files) -> pd.DataFrame:
     return res
 
 
+@send_to_telegram_if_fails
 @click.command()
 @click.option('--input')
 @click.option('--output')
