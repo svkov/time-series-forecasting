@@ -15,4 +15,4 @@ rule all:
         'reports\\diploma.tex',
         'spbu_diploma\\main_example.pdf'
     shell:
-         'echo Ready && telegram-send Готово! && '
+         'echo Ready && telegram-send Готово!'
