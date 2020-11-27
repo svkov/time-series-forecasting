@@ -56,7 +56,7 @@ def arima_predict_for_report(df, start_date, end_date, n, column_name):
         prediction = predict_model(model, pivoted_df, n, column_name)
         predictions.append(prediction)
 
-    columns = [f'n{i + 1}' for i in range(n)]
+    columns = [f'{column_name} n{i + 1}' for i in range(n)]
 
     date_start = transform_date_start(start_date, n)
     date_end = transform_date_start(end_date, n)

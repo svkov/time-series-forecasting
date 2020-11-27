@@ -31,13 +31,19 @@ def save_fig(fig: go.Figure, path):
 @click.option('--output')
 @click.option('--name')
 @click.option('--models')
-@click.option('--path_to_pred')
 @click.option('--n_pred')
-def plot_raw(input, output, name, models, path_to_pred, n_pred):
-    results = get_results(models, path_to_pred, name)
+def plot_pred(input, output, name, models, n_pred):
+    n_pred = int(n_pred)
+    # results = get_results(models, path_to_pred, name)
+    df = pd.read_csv(input, index_col=0, parse_dates=True)
+    models = models.split()
+    results = pd.DataFrame()
+    for model in models:
+        # for i in range(n_pred):
+        results[model] = df[f'{model} Close n{n_pred}'].iloc[n_pred:]
     fig = get_fig(results, name, metric=mean_absolute_error, n_pred=n_pred)
     save_fig(fig, output)
 
 
 if __name__ == '__main__':
-    plot_raw()  # noqa
+    plot_pred()  # noqa
