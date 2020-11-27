@@ -10,7 +10,7 @@ from src.plots import get_results
 from src.utils import send_to_telegram_if_fails
 
 
-def get_fig(df: pd.DataFrame, name: str, metric: Callable, n_pred: str) -> go.Figure:
+def get_fig(df: pd.DataFrame, name: str, metric: Callable, n_pred) -> go.Figure:
     plots = []
     for col in df.columns:
         if col == 'test':
@@ -34,13 +34,8 @@ def save_fig(fig: go.Figure, path):
 @click.option('--n_pred')
 def plot_pred(input, output, name, models, n_pred):
     n_pred = int(n_pred)
-    # results = get_results(models, path_to_pred, name)
     df = pd.read_csv(input, index_col=0, parse_dates=True)
-    models = models.split()
-    results = pd.DataFrame()
-    for model in models:
-        # for i in range(n_pred):
-        results[model] = df[f'{model} Close n{n_pred}'].iloc[n_pred:]
+    results = get_results(df, models, n_pred)
     fig = get_fig(results, name, metric=mean_absolute_error, n_pred=n_pred)
     save_fig(fig, output)
 

@@ -34,11 +34,12 @@ def get_metrics_df(results, metrics_list):
 @click.option('--output')
 @click.option('--name')
 @click.option('--models')
-@click.option('--path_to_pred')
 @click.option('--n_pred')
 @click.option('--metrics')
-def get_metrics(input, output, name, models, path_to_pred, n_pred, metrics):
-    results = get_results(models, path_to_pred, name)
+def get_metrics(input, output, name, models, n_pred, metrics):
+    n_pred = int(n_pred)
+    df = pd.read_csv(input, index_col=0, parse_dates=True)
+    results = get_results(df, models, n_pred)
 
     metrics = metrics.split()
     get_metrics_df(results, metrics).to_csv(output)

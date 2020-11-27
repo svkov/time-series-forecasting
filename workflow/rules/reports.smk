@@ -10,10 +10,10 @@ rule plot_pred:
     shell: 'python -m src.plots.plot_pred --input {input} --output {output} --models "{params.models}" --name {wildcards.ticker} --n_pred {params.n_pred}'
 
 rule metrics:
-    input: 'data\\interim\\{ticker}.csv', expand('reports\\forecast_{model}\\{{ticker}}.csv', model=config['models'])
-    params: models=config['models'], path_to_pred='reports/forecast_', n_pred=config['n_pred'], metrics=config['metrics']
+    input: 'reports\\forecast\\{ticker}.csv'
+    params: models=config['models'] + ['stacking'], n_pred=config['n_pred'], metrics=config['metrics']
     output: 'reports\\metrics\\metrics_{ticker}.csv'
-    shell: 'python -m src.plots.get_metrics --input {input[0]} --output {output} --models "{params.models}" --name {wildcards.ticker} --path_to_pred {params.path_to_pred} --n_pred {params.n_pred} --metrics "{params.metrics}"'
+    shell: 'python -m src.plots.get_metrics --input {input} --output {output} --models "{params.models}" --name {wildcards.ticker} --n_pred {params.n_pred} --metrics "{params.metrics}"'
 
 rule generate_latex:
     input:
