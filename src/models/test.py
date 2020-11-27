@@ -37,5 +37,5 @@ class Test(Model):
         date_end = transform_date_start(date_end, self.n)
         # dates = df[date_start:date_end].index
         dates = pd.date_range(date_start, date_end)
-        columns = [f'n{i + 1}' for i in range(self.n)]
+        columns = [f'{self.column_name} n{i + 1}' for i in range(self.n)]
         return pd.DataFrame(preds, index=dates, columns=columns)

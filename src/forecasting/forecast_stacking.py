@@ -18,8 +18,6 @@ from src.utils import send_to_telegram_if_fails
 @click.option('--models')
 @click.option('--ticker')
 def forecast_stacking(input, input_all, output, models, ticker):
-    # input = 'reports/forecast_'
-    # input_all = 'data/processed/all.csv'
     models = models.split()
 
     data = []
@@ -35,6 +33,8 @@ def forecast_stacking(input, input_all, output, models, ticker):
     model = Stacking(test_df, *data)
 
     pred = model.predict_for_report(test_df, *data)
+    mapper = {column: f'{ticker} Close {column}' for column in pred.columns}
+    pred = pred.rename(columns=mapper)
     pred.to_csv(output)
 
 

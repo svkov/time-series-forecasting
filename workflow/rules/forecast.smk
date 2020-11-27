@@ -5,7 +5,13 @@ rule forecast_model:
     shell: 'python -m src.forecasting.forecast_model --input {input} --output {output} --n_pred {params.n_pred} --date_start {params.date_start} --date_end {params.date_end} --model {wildcards.model} --ticker {wildcards.ticker}'
 
 rule forecast_stacking:
-    input: 'data\\processed\\all.csv'
+    input: 'data\\processed\\all.csv',
+         expand('reports\\forecast_{model}\\{ticker}.csv', model=config['models'], ticker=config['tickers'])
     output: 'reports\\meta_forecast_stacking\\{ticker}.csv'
     params: input='reports/forecast_', models=config['models']
-    shell: 'python -m src.forecasting.forecast_stacking --input {params.input} --input_all {input} --output {output} --ticker {wildcards.ticker} --models "{params.models}"'
+    shell: 'python -m src.forecasting.forecast_stacking --input {params.input} --input_all {input[0]} --output {output} --ticker {wildcards.ticker} --models "{params.models}"'
+
+rule aggregate_forecast:
+    input: expand('reports\\forecast_{model}\\{{ticker}}.csv', model=config['models']) + ['reports\\meta_forecast_stacking\\{ticker}.csv']
+    output: 'reports\\forecast\\{ticker}.csv'
+    shell: 'python -m src.forecasting.aggregate_forecast --input "{input}" --output {output}'
