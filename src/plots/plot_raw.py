@@ -2,6 +2,8 @@ import click
 import pandas as pd
 import plotly.graph_objects as go
 
+from src.utils import send_to_telegram_if_fails
+
 
 def get_fig(df, name) -> go.Figure:
     return go.Figure(go.Scatter(x=df.Date, y=df.Close), layout={'title': name})

@@ -1,4 +1,5 @@
-tickers: [ES, BTC-USD, ETH-USD]
+#tickers: [ES, BTC-USD, ETH-USD]
+tickers: [CVX, XOM, RDS-A, RDS-B, TOT, BP]
 models: [test, fourier, wavelet, baseline, arima, var]
 n_pred: '10'
 date_start: '2020-09-01'
