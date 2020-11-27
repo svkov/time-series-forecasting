@@ -3,7 +3,7 @@ import numpy as np
 from src.utils import prepare_test_dataframe, transform_date_start
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
-from src.models import Model
+from src.models.model import Model
 import matplotlib.pyplot as plt
 from typing import Iterable, Dict
 
