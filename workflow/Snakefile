@@ -5,8 +5,13 @@ include: 'rules/forecast.smk'
 include: 'rules/reports.smk'
 include: 'rules/process_data.smk'
 
+rule generate_dag:
+    output: 'dag.svg'
+    shell: 'snakemake --dag spbu_diploma/main_example.pdf | dot -Tsvg > dag.svg'
+
 rule all:
     input:
+        'dag.svg',
         expand('reports\\figures_raw\\{ticker}.png', ticker=config['tickers']),
         expand('reports\\forecast_{model}\\{ticker}.csv', ticker=config['tickers'], model=config['models']),
         expand('reports\\meta_forecast_stacking\\{ticker}.csv', ticker=config['tickers']),
