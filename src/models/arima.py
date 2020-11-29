@@ -13,13 +13,13 @@ class ARIMA(Model):
     def __init__(self, df, n=14, column_name='price', verbose=False, **kwargs):
         super().__init__(df, n=n, verbose=verbose)
         self.column_name = column_name
-        self.model = fit_model(df, self.n, self.column_name)
+        self.model = fit_model(df.dropna(), self.n, self.column_name)
 
     def predict(self, df):
         return predict_model(self.model, df, self.n, self.column_name)
 
     def predict_for_report(self, df, date_start, date_end):
-        return arima_predict_for_report(df, date_start, date_end, self.n, self.column_name)
+        return arima_predict_for_report(df.dropna(), date_start, date_end, self.n, self.column_name)
 
 
 def fit_model(pivoted_df, n, column_name):

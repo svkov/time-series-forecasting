@@ -26,3 +26,8 @@ rule generate_all:
     input: 'reports\\diploma.tex'
     output: 'spbu_diploma\\main_example.pdf'
     shell: 'python spbu_diploma\\generate.py'
+
+rule best_metrics:
+    input: expand('reports\\metrics\\metrics_{ticker}.csv', ticker=config['tickers']),
+    output: 'reports\\metrics\\best_metrics.csv'
+    shell: 'python -m src.plots.best_metrics --input "{input}" --output {output}'
