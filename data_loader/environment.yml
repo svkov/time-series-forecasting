@@ -6,4 +6,3 @@ dependencies:
 - flask
 - gunicorn
 - redis
-- pandas
