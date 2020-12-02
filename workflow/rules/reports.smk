@@ -22,8 +22,13 @@ rule generate_latex:
     shell:
         'python -m src.latex.generate_target_file --input "{input}" --output {output}'
 
+rule generate_result_table:
+    input: expand('reports\\metrics\\metrics_{ticker}.csv', ticker=config['tickers'])
+    output: 'reports\\result_table.tex'
+    shell: 'python -m src.latex.generate_table --input "{input}" --output {output}'
+
 rule generate_all:
-    input: 'reports\\diploma.tex'
+    input: 'reports\\diploma.tex', 'reports\\result_table.tex'
     output: 'spbu_diploma\\main_example.pdf'
     shell: 'python spbu_diploma\\generate.py'
 
