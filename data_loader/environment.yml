@@ -8,5 +8,6 @@ dependencies:
 - redis
 - redis-py
 - pip
-- flask-restful
-- yfinance
+- pip:
+    - flask-restful
+    - yfinance
