@@ -7,7 +7,7 @@ COPY environment.yml ./
 #RUN conda config --append channels ranaroussi
 RUN conda env create -f environment.yml
 
-COPY app.py ./
+COPY . ./
 COPY boot.sh ./
 RUN chmod +x boot.sh
 RUN echo "source activate data_loader" > ~/.bashrc
