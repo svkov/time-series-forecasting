@@ -15,12 +15,15 @@ app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_CONNECTION_URI
 db = SQLAlchemy(app)
 
 
-
 class User(db.Model):
     tablename = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=False, nullable=False)
     email = db.Column(db.String, unique=False, nullable=False)
+
+
+db.create_all()
+db.session.commit()
 
 
 def get_hit_count():
@@ -63,6 +66,4 @@ api.add_resource(DB, '/')
 api.add_resource(DataDownload, '/data/')
 
 if __name__ == '__main__':
-    db.create_all()
-    db.session.commit()
     app.run()
