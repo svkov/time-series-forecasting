@@ -1,0 +1,15 @@
+name: data_loader
+channels:
+- defaults
+dependencies:
+- python=3.8
+- flask
+- gunicorn
+- redis
+- redis-py
+- pip
+- pip:
+    - flask-restful
+    - yfinance
+    - psycopg2-binary
+    - Flask-SQLAlchemy
