@@ -19,8 +19,7 @@ def read_data(files):
     return data
 
 
-def aggregate(files) -> pd.DataFrame:
-    data = read_data(files)
+def transform_data(data):
     res = pd.DataFrame()
     for key, df in data.items():
         res[f'{key} Open'] = df['Open']
@@ -29,6 +28,11 @@ def aggregate(files) -> pd.DataFrame:
         res[f'{key} Low'] = df['Low']
         res[f'{key} Volume'] = df['Volume']
     return res
+
+
+def aggregate(files) -> pd.DataFrame:
+    data = read_data(files)
+    return transform_data(data)
 
 
 @send_to_telegram_if_fails

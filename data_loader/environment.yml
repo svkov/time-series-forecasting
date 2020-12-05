@@ -7,6 +7,7 @@ dependencies:
 - gunicorn
 - redis
 - redis-py
+- pandas
 - pip
 - pip:
     - flask-restful
