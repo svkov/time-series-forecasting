@@ -36,14 +36,14 @@ import click
 """
 
 
-def generate_table_header(body, caption, columns_width):
+def generate_table_header(body, caption, columns_width, label='result_table'):
     if not isinstance(body, str):
         raise ValueError(f'body должен быть строкой, вместо этого {type(body)}')
     width = ''.join([f'|p{{{width}cm}}' for width in columns_width]) + '|'
     return \
         f"""\\begin{{center}}
     \\begin{{longtable}}{{{width}}}
-    \\caption{{{caption}}}\\\\
+    \\caption{{{caption}}}\\label{{{label}}}\\\\
     {body}
 \\end{{longtable}}
 \\end{{center}}"""
@@ -51,7 +51,7 @@ def generate_table_header(body, caption, columns_width):
 
 def generate_row(name, row, sep='\\hline\n', end='\\\\\n'):
     name = f'{name[0]} & {name[1]} & '
-    values = ' & '.join(map(str, row.tolist()))
+    values = ' & '.join(map(lambda x: str(round(x, 1)), row.tolist()))
     return sep + name + values + end
 
 
@@ -62,7 +62,7 @@ def generate_columns(index_names, columns):
 
 def df_to_latex(df: pd.DataFrame, caption):
     body = ''
-    columns_width = [2 for i in range(df.index.nlevels)] + [2 for i in range(len(df.columns))]
+    columns_width = [1.5 for i in range(df.index.nlevels)] + [1.5 for i in range(len(df.columns))]
 
     body += generate_columns(df.index.names, df.columns)
     for name, row in df.iterrows():
