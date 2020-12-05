@@ -13,6 +13,8 @@ services:
     depends_on:
       - db
     restart: always
+    networks:
+      - local
   forecaster:
     build: forecaster
     ports:
@@ -23,11 +25,17 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_HOST: forecaster_db
       POSTGRES_PORT: 5433
+      DATA_LOADER_HOST: data_loader
+      DATA_LOADER_PORT: 5000
     depends_on:
       - forecaster_db
     restart: always
+    networks:
+      - local
   redis:
     image: "redis:alpine"
+    networks:
+      - local
   db:
     image: postgres
     restart: always
@@ -39,6 +47,8 @@ services:
       POSTGRES_DB: data_loader
     volumes:
       - database_data:/var/lib/postgresql/data
+    networks:
+      - local
   forecaster_db:
     image: postgres
     restart: always
@@ -50,8 +60,13 @@ services:
       PGPORT: 5433
     volumes:
       - forecaster_db_data:/var/lib/postgresql/forecaster_data
+    networks:
+      - local
 volumes:
   database_data:
     driver: local
   forecaster_db_data:
     driver: local
+networks:
+  local:
+    driver: bridge
