@@ -13,3 +13,5 @@ dependencies:
     - yfinance
     - psycopg2-binary
     - Flask-SQLAlchemy
+    - --extra-index-url https://test.pypi.org/simple/
+    - simple-ts-forecast
