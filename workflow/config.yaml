@@ -1,5 +1,13 @@
-#tickers: [ES, BTC-USD, ETH-USD]
-tickers: [CVX, XOM, RDS-A, RDS-B, TOT, BP, BTC-USD, ETH-USD]
+# tickers: [ES, BTC-USD, ETH-USD]
+# tickers: [CVX, XOM, RDS-A, RDS-B, TOT, BP, BTC-USD, ETH-USD]
+tickers: [CL=F, EURUSD=X, BTC-USD, GC=F, TSLA]
+tickers_desc:
+  - CL=F: 'Цена за баррель сырой нефти в долларах'
+  - EURUSD=X: 'Цена евро к доллару'
+  - BTC-USD: 'Цена биткоина в долларах'
+  - GC=F: 'Цена золота в долларах'
+  - TSLA: 'Цена акции компании Tesla в долларах'
+
 models: [test, fourier, wavelet, baseline, arima, var]
 n_pred: '10'
 date_start: '2020-06-01'

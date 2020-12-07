@@ -2,6 +2,7 @@ import os
 
 import pandas as pd
 from src.utils import send_to_telegram_if_fails
+from src.latex import generate_columns, generate_row, generate_table_header
 import click
 
 """
@@ -34,30 +35,6 @@ import click
     \end{longtable}
 \end{center}
 """
-
-
-def generate_table_header(body, caption, columns_width, label='result_table'):
-    if not isinstance(body, str):
-        raise ValueError(f'body должен быть строкой, вместо этого {type(body)}')
-    width = ''.join([f'|p{{{width}cm}}' for width in columns_width]) + '|'
-    return \
-        f"""\\begin{{center}}
-    \\begin{{longtable}}{{{width}}}
-    \\caption{{{caption}}}\\label{{{label}}}\\\\
-    {body}
-\\end{{longtable}}
-\\end{{center}}"""
-
-
-def generate_row(name, row, sep='\\hline\n', end='\\\\\n'):
-    name = f'{name[0]} & {name[1]} & '
-    values = ' & '.join(map(lambda x: str(round(x, 1)), row.tolist()))
-    return sep + name + values + end
-
-
-def generate_columns(index_names, columns):
-    columns = list(index_names) + list(columns)
-    return '\\hline\n' + ' & '.join([f'\\textbf{{{name}}}' for name in columns]) + '\\\\\n'
 
 
 def df_to_latex(df: pd.DataFrame, caption):
