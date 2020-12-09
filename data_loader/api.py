@@ -8,7 +8,7 @@ from cache import cache
 from model import Ticker
 
 
-def Hello(Resource):
+class Hello(Resource):
 
     def get(self):
         return {'routes': ['download', 'exist', 'data']}

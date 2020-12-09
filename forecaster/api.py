@@ -12,7 +12,7 @@ import config
 import pandas as pd
 
 
-def Hello(Resource):
+class Hello(Resource):
     def get(self):
         return {'routes': ['/<ticker>/<model>']}
 
