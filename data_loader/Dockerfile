@@ -12,5 +12,4 @@ COPY boot.sh ./
 RUN chmod +x boot.sh
 RUN echo "source activate data_loader" > ~/.bashrc
 ENV PATH /opt/conda/envs/data_loader/bin:$PATH
-EXPOSE 5000
 ENTRYPOINT ["sh", "boot.sh"]

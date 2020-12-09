@@ -12,11 +12,6 @@ import config
 import pandas as pd
 
 
-# sys.path.append('../')
-
-
-# from src.models.baseline import Baseline
-
 class Hello(Resource):
     def get(self):
         return Baseline.__dict__
@@ -56,9 +51,8 @@ class DataLoaderAPI(Resource):
     def predict(self, df, model):
         try:
             prediction = ModelsManager().predict(df, model)
-            # prediction = Baseline(df, column_name='close').predict(df)
-        except:
-            return {'error': f'Cannot make prediction for: {df}'}
+        except ValueError as e:
+            return {'error': f'Cannot make prediction for: {df} because: {e}'}
         return prediction.tolist()
 
     def get(self, ticker, model):
