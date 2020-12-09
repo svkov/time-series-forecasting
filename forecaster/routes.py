@@ -6,6 +6,6 @@ from app import app
 
 def route():
     # api.add_resource(Hello, '/')
-    api.add_resource(DataLoaderAPI, '/')
+    api.add_resource(DataLoaderAPI, '/<string:ticker>/<string:model>/')
 
 api = Api(app)
