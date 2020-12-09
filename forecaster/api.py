@@ -12,9 +12,9 @@ import config
 import pandas as pd
 
 
-class Hello(Resource):
+def Hello(Resource):
     def get(self):
-        return Baseline.__dict__
+        return {'routes': ['/<ticker>/<model>']}
 
 
 class DataLoaderAPI(Resource):

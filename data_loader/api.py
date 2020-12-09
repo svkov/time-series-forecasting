@@ -8,22 +8,10 @@ from cache import cache
 from model import Ticker
 
 
-def get_hit_count():
-    retries = 5
-    while True:
-        try:
-            return cache.incr('hits')
-        except redis.exceptions.ConnectionError as exc:
-            if retries == 0:
-                raise exc
-            retries -= 1
-            time.sleep(0.5)
+def Hello(Resource):
 
-
-class HelloWorld(Resource):
     def get(self):
-        return {'hit_count': get_hit_count()}
-
+        return {'routes': ['download', 'exist', 'data']}
 
 class DB(Resource):
     @staticmethod
