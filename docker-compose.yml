@@ -3,7 +3,7 @@ services:
   data_loader:
     build: data_loader
     ports:
-      - 5001
+      - "5001:5001"
     environment:
       POSTGRES_PASSWORD: example
       POSTGRES_USER: postgres
@@ -18,7 +18,7 @@ services:
   forecaster:
     build: forecaster
     ports:
-      - 5000
+      - "5000:5000"
     environment:
       POSTGRES_PASSWORD: example
       POSTGRES_USER: postgres
