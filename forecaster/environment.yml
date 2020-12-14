@@ -15,3 +15,4 @@ dependencies:
     - Flask-SQLAlchemy
     - --extra-index-url https://test.pypi.org/simple/
     - simple-ts-forecast
+    - flask-cors

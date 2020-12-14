@@ -26,7 +26,7 @@ services:
       POSTGRES_HOST: forecaster_db
       POSTGRES_PORT: 5433
       DATA_LOADER_HOST: data_loader
-      DATA_LOADER_PORT: 5000
+      DATA_LOADER_PORT: 5001
     depends_on:
       - forecaster_db
     restart: always

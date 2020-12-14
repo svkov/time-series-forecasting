@@ -83,3 +83,9 @@ class ModelsManager:
     def predict(self, df: pd.DataFrame, model: str):
         self._is_input_valid(df, model)
         return self.model_map[model](df, column_name='close').predict(df)
+
+
+class AvailableModels(Resource):
+    def get(self):
+        names = {key: class_.__name__ for key, class_ in ModelsManager.model_map.items()}
+        return {'response': names}
