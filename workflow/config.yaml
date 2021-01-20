@@ -10,6 +10,6 @@ tickers_desc:
 
 models: [test, fourier, wavelet, baseline, arima, var]
 n_pred: '10'
-date_start: '2020-06-01'
-date_end: '2020-10-05'
+date_start: '2020-12-01'
+date_end: '2021-01-20'
 metrics: [MAE, MAPE]
