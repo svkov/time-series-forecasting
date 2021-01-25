@@ -8,8 +8,9 @@ tickers_desc:
   - GC=F: 'Цена золота в долларах'
   - TSLA: 'Цена акции компании Tesla в долларах'
 
-models: [test, fourier, wavelet, baseline, arima, var]
+#models: [test, fourier, wavelet, baseline, arima, var]
+models: [test, wavelet, baseline, arima, var]
 n_pred: '10'
 date_start: '2020-12-01'
-date_end: '2021-01-20'
+date_end: '2020-12-30'
 metrics: [MAE, MAPE]

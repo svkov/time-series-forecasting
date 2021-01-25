@@ -1,12 +1,21 @@
-from pdflatex import PDFLaTeX
 import os
+import subprocess
 
 
 def generate():
+    with open(os.devnull, 'wb') as devnull:
+        subprocess.check_call(['pdflatex', 'main_example.tex'], stdout=devnull, stderr=subprocess.STDOUT)
+
+
+def main():
+    """
+    Нужно компилировать документ два раза, чтобы появилось содержание и ссылки.
+    На всякий случай будем компилировать три раза.
+    """
     os.chdir('spbu_diploma/')
-    pdfl = PDFLaTeX.from_texfile('main_example.tex')
-    pdf, log, completed_process = pdfl.create_pdf(keep_pdf_file=True, keep_log_file=True)
+    for i in range(3):
+        generate()
 
 
 if __name__ == '__main__':
-    generate()
+    main()
