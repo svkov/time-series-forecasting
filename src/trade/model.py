@@ -1,15 +1,21 @@
 from sklearn.metrics import accuracy_score
 
 from src.trade import Simulation
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LogisticRegression, Lasso, Ridge, RidgeClassifier
 from sklearn.ensemble import RandomForestClassifier
 
 import warnings
+
 warnings.simplefilter("ignore")
 
-def get_model():
-    #     return RandomForestClassifier()
-    return LogisticRegression()
+
+def get_model(model_type='logistic'):
+    models = {
+        'logistic': LogisticRegression(),
+        'random_forest': RandomForestClassifier(),
+        'ridge': RidgeClassifier(),
+    }
+    return models[model_type]
 
 
 def get_x(train, test, x_columns):
@@ -35,8 +41,8 @@ def get_cv_train_test(df, train_size=0.9):
         yield train, test
 
 
-def fit_model(x_train, y_train):
-    model = get_model()
+def fit_model(x_train, y_train, model_type='logistic'):
+    model = get_model(model_type)
     model.fit(x_train, y_train)
     return model
 
@@ -48,19 +54,17 @@ def get_x_y_train_test(train, test, window_len):
     return x_train, x_test, y_train, y_test
 
 
-def get_accuracy(train, test, window_len):
+def get_accuracy(train, test, window_len, model_type='logistic'):
     x_train, x_test, y_train, y_test = get_x_y_train_test(train, test, window_len)
-    model = fit_model(x_train, y_train)
+    model = fit_model(x_train, y_train, model_type)
     y_pred = model.predict(x_test)
     return accuracy_score(y_pred, y_test)
 
 
-def best_window_len_cv(df, window_len):
+def best_window_len_cv(df, window_len, model_type='logistic'):
     #     train, test = train_test_split(df)
     accuracies = []
     for train, test in get_cv_train_test(df, train_size=0.95):
-        accuracy = get_accuracy(train, test, window_len)
+        accuracy = get_accuracy(train, test, window_len, model_type)
         accuracies.append(accuracy)
     return sum(accuracies) / len(accuracies)
-
-

@@ -1,7 +1,4 @@
 import pandas as pd
-from sklearn.metrics import accuracy_score
-
-from src.trade.model import fit_model, get_x_y_train_test
 
 
 class Simulation:
@@ -16,6 +13,8 @@ class Simulation:
         self.log = []
         for idx, row in enumerate(df.iterrows()):
             ts, label, price = row[0], row[1][label_column], row[1].target
+            if self.verbose:
+                print(f'Volume: {self.vol}, price: {price}, idx:{idx}, label: {label}')
 
             if label == 'buy' and self.can_buy(price):
                 self.buy(price)
@@ -51,26 +50,3 @@ class Simulation:
         if self.can_sell(price):
             self.sell(price)
 
-
-def train_test_split(df, train_size=0.9):
-    pivot = int(len(df) * train_size)
-    train = df[:pivot].dropna()
-    test = df[pivot:].dropna()
-    return train, test
-
-
-def add_results_to_df(df_window, window_len):
-    train, test = train_test_split(df_window, train_size=0.9)
-    x_train, x_test, y_train, y_test = get_x_y_train_test(train, test, window_len)
-    model = fit_model(x_train, y_train)
-    y_pred = model.predict(x_test)
-    print('Accuracy:', accuracy_score(y_pred, y_test))
-    df_window['predicted_label'] = pd.Series(y_pred, index=df_window.index[-y_pred.shape[0]:])
-    df_window.dropna(inplace=True)
-    return df_window
-
-
-def get_simulation_results(df_window):
-    res, log = Simulation(1000).play_simulation(df_window, label_column='predicted_label')
-    best_res, log = Simulation(1000).play_simulation(df_window, label_column='label')
-    return res, best_res
