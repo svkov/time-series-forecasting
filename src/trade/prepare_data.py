@@ -79,7 +79,8 @@ def prepare_data_without_window(path='../data/processed/all.csv', instrument='CL
     df = read_data(path)
     res = minimize_scalar(get_imbalance_by_thresh, method='bounded', args=(df, instrument, n), bounds=bounds)
     thresh = res.x
-    print(f'Threshold for {instrument} is {thresh:.2f}%')
+    if verbose:
+        print(f'Threshold for {instrument} is {thresh:.2f}%')
     return make_labels(df, f'{instrument} Close', n=n, thresh=thresh)
 
 
