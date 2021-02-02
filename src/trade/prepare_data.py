@@ -73,13 +73,13 @@ def prepare_data(path='../data/processed/all.csv', instrument='CL=F', n=3, windo
     return df
 
 
-def prepare_data_without_window(path='../data/processed/all.csv', instrument='CL=F', n=3, bounds=None):
+def prepare_data_without_window(path='../data/processed/all.csv', instrument='CL=F', n=3, bounds=None, verbose=True):
     if bounds is None:
-        bounds = [0.1, 50]
+        bounds = [0.1, 20]
     df = read_data(path)
     res = minimize_scalar(get_imbalance_by_thresh, method='bounded', args=(df, instrument, n), bounds=bounds)
     thresh = res.x
-    print(thresh)
+    print(f'Threshold for {instrument} is {thresh:.2f}%')
     return make_labels(df, f'{instrument} Close', n=n, thresh=thresh)
 
 

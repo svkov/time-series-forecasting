@@ -13,6 +13,7 @@ rule all:
         expand('reports\\meta_forecast_stacking\\{ticker}.csv', ticker=config['tickers']),
         expand('reports\\forecast\\{ticker}.csv', ticker=config['tickers']),
         expand('reports\\figures_pred\\{ticker}.png', ticker=config['tickers']),
+        expand('data\\trade\\{ticker}.csv', ticker=config['tickers']),
         # expand('reports\\metrics\\metrics_{ticker}.csv', ticker=config['tickers']),
         'data\\processed\\all.csv',
         'reports\\diploma.tex',
