@@ -81,7 +81,17 @@ def prepare_data_without_window(path='../data/processed/all.csv', instrument='CL
     thresh = res.x
     if verbose:
         print(f'Threshold for {instrument} is {thresh:.2f}%')
-    return make_labels(df, f'{instrument} Close', n=n, thresh=thresh)
+    labels = make_labels(df, f'{instrument} Close', n=n, thresh=thresh).dropna()
+    unique_classes = len(labels.label.unique())
+    if unique_classes < 3:
+        if thresh < 0.001:
+            print('WARNING: threshold not found')
+            return labels
+        new_bounds = [bounds[0], bounds[1] / 2]
+        if verbose:
+            print(f'Only {unique_classes} were found, trying again with bounds {new_bounds}')
+        return prepare_data_without_window(path, instrument, n, new_bounds, verbose)
+    return labels
 
 
 def train_test_split(df, train_size=0.9):

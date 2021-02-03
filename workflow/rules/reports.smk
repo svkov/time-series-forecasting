@@ -44,3 +44,9 @@ rule best_metrics:
     input: expand('reports\\metrics\\metrics_{ticker}.csv', ticker=config['tickers']),
     output: 'reports\\metrics\\best_metrics.csv'
     shell: 'python -m src.plots.best_metrics --input "{input}" --output {output}'
+
+rule best_window_sizes:
+    input: 'data\\trade\\{ticker}.csv'
+    output: 'reports\\window_sizes\\{ticker}.json'
+    params: n=config['n_trade'], models=config['models_trade']
+    shell: 'python -m src.data.find_best_window_size_trade --input {input} --output {output} --n {params.n} --model_types "{params.models}"'
