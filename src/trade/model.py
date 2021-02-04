@@ -63,10 +63,15 @@ def get_x_y_train_test(train, test, window_len):
 
 
 def get_accuracy(train, test, window_len, model_type='logistic'):
+    y_pred, y_test = fit_predict(train, test, window_len, model_type)
+    return accuracy_score(y_pred, y_test)
+
+
+def fit_predict(train, test, window_len, model_type='logistic'):
     x_train, x_test, y_train, y_test = get_x_y_train_test(train, test, window_len)
     model = fit_model(x_train, y_train, model_type)
     y_pred = model.predict(x_test)
-    return accuracy_score(y_pred, y_test)
+    return y_pred, y_test
 
 
 def best_window_len_cv(df, window_len, model_type='logistic'):

@@ -12,7 +12,7 @@ tickers_desc:
 models: [test, wavelet, baseline, arima, var]
 n_pred: '10'
 n_trade: '3'
-models_trade: [logistic, random_forest, ridge]
+models_trade: [logistic, ridge]
 date_start: '2020-12-01'
 date_end: '2020-12-30'
 metrics: [MAE, MAPE]

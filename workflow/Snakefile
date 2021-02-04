@@ -15,6 +15,7 @@ rule all:
         expand('reports\\figures_pred\\{ticker}.png', ticker=config['tickers']),
         expand('data\\trade\\{ticker}.csv', ticker=config['tickers']),
         expand('reports\\window_sizes\\{ticker}.json', ticker=config['tickers']),
+        expand('reports\\trade_forecast\\{ticker}.json', ticker=config['tickers']),
         # expand('reports\\metrics\\metrics_{ticker}.csv', ticker=config['tickers']),
         'data\\processed\\all.csv',
         'reports\\diploma.tex',

@@ -15,3 +15,17 @@ rule aggregate_forecast:
     input: expand('reports\\forecast_{model}\\{{ticker}}.csv', model=config['models']) + ['reports\\meta_forecast_stacking\\{ticker}.csv']
     output: 'reports\\forecast\\{ticker}.csv'
     shell: 'python -m src.forecasting.aggregate_forecast --input "{input}" --output {output}'
+
+rule forecast_trade:
+    input:
+        input='data\\trade\\{ticker}.csv',
+        window='reports\\window_sizes\\{ticker}.json'
+    output:
+          'reports\\trade_forecast\\{ticker}.json'
+    params:
+          n=config['n_trade'],
+          model_types=config['models_trade']
+    shell:
+         'python -m src.forecasting.forecast_trade_model --input {input.input}'
+         ' --output {output} --window {input.window}'
+         ' --n {params.n} --model_types "{params.model_types}"'
