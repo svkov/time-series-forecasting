@@ -20,16 +20,17 @@ def forecast_trade(input, output, window, n, model_types):
 
     df = pd.read_csv(input, index_col=0, parse_dates=True)
 
-    result = []
+    result = {}
     for model in model_types:
         window_model = int(best_widows[model]['window'])
         window_df = generate_window(df, window_model)
         print(window_model, model)
+        result[model] = []
         for train, test in get_cv_train_test(window_df, train_size=0.9):
             y_pred, y_test = fit_predict(train, test, window_model, model)
             date = train.index[-1]
-            result.append({'pred': y_pred.tolist(), 'test': y_test.tolist(), 'date': date.strftime('%Y-%m-%d')})
-    print(result)
+            target = test.target.tolist()
+            result[model].append({'pred': y_pred.tolist(), 'test': y_test.tolist(), 'target': target, 'date': date.strftime('%Y-%m-%d')})
     with open(output, 'w') as file:
         file.write(json.dumps(result))
 
