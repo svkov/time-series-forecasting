@@ -181,3 +181,7 @@ def send_to_telegram_if_fails(func, *args, **kwargs):
             raise e
 
     return wrapper
+
+
+def save_plotly_fig(fig, path):
+    fig.write_image(path)
