@@ -46,26 +46,26 @@ rule best_metrics:
     shell: 'python -m src.plots.best_metrics --input "{input}" --output {output}'
 
 rule best_window_sizes:
-    input: 'data\\trade\\{ticker}.csv'
-    output: 'reports\\window_sizes\\{ticker}.json'
+    input: 'data\\processed\\trade\\{ticker}.csv'
+    output: 'reports\\trade\\window_sizes\\{ticker}.json'
     params: n=config['n_trade'], models=config['models_trade']
     shell: 'python -m src.data.find_best_window_size_trade --input {input} --output {output} --n {params.n} --model_types "{params.models}"'
 
 rule plot_trade_accuracy:
-    input: 'reports\\trade_forecast\\{ticker}.json'
-    output: 'reports\\figures_trade_accuracy\\{ticker}.png'
+    input: 'reports\\trade\\forecast\\{ticker}.json'
+    output: 'reports\\trade\\figures_accuracy\\{ticker}.png'
     params: n=config['n_trade']
     shell: 'python -m src.plots.plot_trade_accuracy --input {input} --output {output} --n {params.n}'
 
 rule play_simulation:
-    input: 'reports\\trade_forecast\\{ticker}.json'
-    output: 'reports\\simulation\\logs\\{ticker}_{model_type}.csv'
+    input: 'reports\\trade\\forecast\\{ticker}.json'
+    output: 'reports\\trade\\simulation\\logs\\{ticker}_{model_type}.csv'
     params: n=config['n_trade'], budget=config['trade_budget']
     shell: 'python -m src.plots.play_simulation --input {input} --output {output}' \
     ' --n {params.n} --model_type {wildcards.model_type} --budget {params.budget}'
 
 rule simulation_results:
-    input: expand('reports\\simulation\\logs\\{ticker}_{model_type}.csv', ticker=config['tickers'], model_type=config['models_trade'])
-    output: 'reports\\simulation\\result.csv'
+    input: expand('reports\\trade\\simulation\\logs\\{ticker}_{model_type}.csv', ticker=config['tickers'], model_type=config['models_trade'])
+    output: 'reports\\trade\\simulation\\result.csv'
     params: budget=config['trade_budget']
     shell: 'python -m src.plots.simulation_results --input "{input}" --output {output} --budget {params.budget}'

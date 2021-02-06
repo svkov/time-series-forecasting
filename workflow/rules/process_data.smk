@@ -10,6 +10,6 @@ rule processed:
 
 rule trade_data:
     input: 'data\\processed\\all.csv'
-    output: 'data\\trade\\{ticker}.csv'
+    output: 'data\\processed\\trade\\{ticker}.csv'
     params: n=config['n_trade']
     shell: 'python -m src.data.to_trade --input {input} --output {output} --n {params.n}'

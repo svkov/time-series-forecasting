@@ -18,10 +18,10 @@ rule aggregate_forecast:
 
 rule forecast_trade:
     input:
-        input='data\\trade\\{ticker}.csv',
-        window='reports\\window_sizes\\{ticker}.json'
+        input='data\\processed\\trade\\{ticker}.csv',
+        window='reports\\trade\\window_sizes\\{ticker}.json'
     output:
-          'reports\\trade_forecast\\{ticker}.json'
+          'reports\\trade\\forecast\\{ticker}.json'
     params:
           n=config['n_trade'],
           model_types=config['models_trade']
