@@ -1,21 +1,33 @@
+# forecast time series
+
 rule forecast_model:
     input: 'data\\processed\\all.csv'
-    output: 'reports\\forecast_{model}\\{ticker}.csv'
+    output: 'reports\\forecast\\models\\{model}\\{ticker}.csv'
     params: n_pred=config['n_pred'], date_start=config['date_start'], date_end=config['date_end']
     shell: 'python -m src.forecasting.forecast_model --input {input} --output {output} --n_pred {params.n_pred} --date_start {params.date_start} --date_end {params.date_end} --model {wildcards.model} --ticker {wildcards.ticker}'
 
 rule forecast_stacking:
-    input: 'data\\processed\\all.csv',
-         expand('reports\\forecast_{model}\\{ticker}.csv', model=config['models'], ticker=config['tickers'])
-    output: 'reports\\meta_forecast_stacking\\{ticker}.csv'
-    params: input='reports/forecast_', models=config['models']
-    shell: 'python -m src.forecasting.forecast_stacking --input {params.input} --input_all {input[0]} --output {output} --ticker {wildcards.ticker} --models "{params.models}"'
+    input:
+        all='data\\processed\\all.csv',
+        # to be sure that all predictions are generated
+        models=expand('reports\\forecast\\models\\{model}\\{{ticker}}.csv', model=config['models'])
+    output: 'reports\\forecast\\stacking\\{ticker}.csv'
+    params:
+        models=config['models'],
+        main_dir='reports\\forecast\\models\\'
+
+    shell: 'python -m src.forecasting.forecast_stacking --input {params.main_dir}'
+           ' --input_all {input.all} --output {output}'
+           ' --ticker {wildcards.ticker} --models "{params.models}"'
 
 rule aggregate_forecast:
-    input: expand('reports\\forecast_{model}\\{{ticker}}.csv', model=config['models']) + ['reports\\meta_forecast_stacking\\{ticker}.csv']
-    output: 'reports\\forecast\\{ticker}.csv'
+    input: expand('reports\\forecast\\models\\{model}\\{{ticker}}.csv', model=config['models']) + ['reports\\forecast\\stacking\\{ticker}.csv']
+    output: 'reports\\forecast\\aggregated\\{ticker}.csv'
     shell: 'python -m src.forecasting.aggregate_forecast --input "{input}" --output {output}'
 
+
+# _________________________________________________
+# forecast trade
 rule forecast_trade:
     input:
         input='data\\processed\\trade\\{ticker}.csv',

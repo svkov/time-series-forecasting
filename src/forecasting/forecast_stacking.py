@@ -22,7 +22,7 @@ def forecast_stacking(input, input_all, output, models, ticker):
 
     data = []
     for model in models:
-        path = os.path.join(input + f'{model}', f'{ticker}.csv')
+        path = os.path.join(input, model, f'{ticker}.csv')
         df = pd.read_csv(path, index_col=0, parse_dates=True)
         if model != 'test':
             data.append(df)

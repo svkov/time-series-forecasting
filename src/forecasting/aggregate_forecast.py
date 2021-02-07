@@ -20,8 +20,10 @@ def aggregate_forecast(input, output):
     final_df = pd.DataFrame()
     for path in forecasts:
         df = pd.read_csv(path, index_col=0, parse_dates=True)
-        model_name = os.path.split(path)[-2].split('_')[-1]
-        ticker = os.path.split(path)[-1].replace('.csv', '')
+
+        new_path, ticker = os.path.split(path)
+        ticker = ticker.replace('.csv', '')
+        model_name = os.path.split(new_path)[-1]
         mapper = {column: f'{model_name}{column.replace(ticker, "")}' for column in df.columns}
         df = df.rename(columns=mapper)
         final_df = pd.concat([final_df, df], axis=1)

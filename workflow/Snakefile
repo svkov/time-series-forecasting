@@ -9,10 +9,10 @@ rule all:
     input:
         'dag.svg',
         expand('reports\\figures_raw\\{ticker}.png', ticker=config['tickers']),
-        expand('reports\\forecast_{model}\\{ticker}.csv', ticker=config['tickers'], model=config['models']),
-        expand('reports\\meta_forecast_stacking\\{ticker}.csv', ticker=config['tickers']),
-        expand('reports\\forecast\\{ticker}.csv', ticker=config['tickers']),
-        expand('reports\\figures_pred\\{ticker}.png', ticker=config['tickers']),
+        # expand('reports\\forecast\\models\\{model}\\{ticker}.csv', ticker=config['tickers'], model=config['models']),
+        # expand('reports\\forecast\\stacking\\{ticker}.csv', ticker=config['tickers']),
+        expand('reports\\forecast\\aggregated\\{ticker}.csv', ticker=config['tickers']),
+        expand('reports\\forecast\\figures\\{ticker}.png', ticker=config['tickers']),
         expand('data\\processed\\trade\\{ticker}.csv', ticker=config['tickers']),
         expand('reports\\trade\\window_sizes\\{ticker}.json', ticker=config['tickers']),
         expand('reports\\trade\\forecast\\{ticker}.json', ticker=config['tickers']),
@@ -23,7 +23,7 @@ rule all:
         'data\\processed\\all.csv',
         'reports\\diploma.tex',
         'spbu_diploma\\main_example.pdf',
-        'reports\\metrics\\best_metrics.csv',
+        'reports\\forecast\\metrics\\best\\metrics.csv',
     shell:
          'echo Ready && telegram-send Готово!'
 

@@ -33,6 +33,15 @@ def save_fig(fig: go.Figure, path):
 @click.option('--models')
 @click.option('--n_pred')
 def plot_pred(input, output, name, models, n_pred):
+    """
+
+    :param input: Список путей до предсказания одной модели (без стекинга)
+    :param output: Путь куда должен сохраниться график предсказания по этому тикеру
+    :param name:
+    :param models:
+    :param n_pred:
+    :return:
+    """
     n_pred = int(n_pred)
     df = pd.read_csv(input, index_col=0, parse_dates=True)
     results = get_results(df, models, n_pred)
