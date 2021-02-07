@@ -1,0 +1,15 @@
+name: default
+channels:
+- defaults
+dependencies:
+- pandas
+- pip
+- numpy
+- sklearn
+- pywt
+- matplotlib
+- statsmodels
+- pmdarima
+- plotly
+- pip:
+    - yfinance

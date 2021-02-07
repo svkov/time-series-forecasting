@@ -1,32 +1,34 @@
-configfile: 'workflow/config.yaml' # noqa
+configfile: 'workflow\\config.yaml' # noqa
 
-include: 'rules/download_data.smk'
-include: 'rules/forecast.smk'
-include: 'rules/reports.smk'
-include: 'rules/process_data.smk'
+include: 'rules\\download_data.smk' # noqa
+include: 'rules\\forecast.smk' # noqa
+include: 'rules\\reports.smk' # noqa
+include: 'rules\\process_data.smk' # noqa
 
 rule all:
     input:
-        'dag.svg',
-        expand('reports\\figures_raw\\{ticker}.png', ticker=config['tickers']),
-        # expand('reports\\forecast\\models\\{model}\\{ticker}.csv', ticker=config['tickers'], model=config['models']),
-        # expand('reports\\forecast\\stacking\\{ticker}.csv', ticker=config['tickers']),
-        expand('reports\\forecast\\aggregated\\{ticker}.csv', ticker=config['tickers']),
-        expand('reports\\forecast\\figures\\{ticker}.png', ticker=config['tickers']),
-        expand('data\\processed\\trade\\{ticker}.csv', ticker=config['tickers']),
-        expand('reports\\trade\\window_sizes\\{ticker}.json', ticker=config['tickers']),
-        expand('reports\\trade\\forecast\\{ticker}.json', ticker=config['tickers']),
-        expand('reports\\trade\\figures_accuracy\\{ticker}.png', ticker=config['tickers']),
-        # expand('reports\\simulation\\logs\\{ticker}_{model_type}.csv', ticker=config['tickers'], model_type=config['models_trade']),
-        # expand('reports\\metrics\\metrics_{ticker}.csv', ticker=config['tickers']),
-        'reports\\trade\\simulation\\result.csv',
-        'data\\processed\\all.csv',
-        'reports\\diploma.tex',
-        'spbu_diploma\\main_example.pdf',
-        'reports\\forecast\\metrics\\best\\metrics.csv',
+        download=expand('data\\raw\\data_{ticker}.csv', ticker=config['tickers']),
+        dag='dag.svg',
+        figures_raw=expand('reports\\figures_raw\\{ticker}.png', ticker=config['tickers']),
+        aggregated=expand('reports\\forecast\\aggregated\\{ticker}.csv', ticker=config['tickers']),
+        forecast_figures=expand('reports\\forecast\\figures\\{ticker}.png', ticker=config['tickers']),
+        processed_trade=expand('data\\processed\\trade\\{ticker}.csv', ticker=config['tickers']),
+        trade_window_sizes=expand('reports\\trade\\window_sizes\\{ticker}.json', ticker=config['tickers']),
+        trade_forecast=expand('reports\\trade\\forecast\\{ticker}.json', ticker=config['tickers']),
+        trade_figures_accuracy=expand('reports\\trade\\figures_accuracy\\{ticker}.png', ticker=config['tickers']),
+        trade_simulation='reports\\trade\\simulation\\result.csv',
+        processed='data\\processed\\all.csv',
+        diploma='reports\\diploma.tex',
+        final='spbu_diploma\\main_example.pdf',
+        forecast_metrics='reports\\forecast\\metrics\\best\\metrics.csv',
+    log: 'logs/all.log'
+    conda: 'envs/default.yaml'
     shell:
          'echo Ready && telegram-send Готово!'
 
+
 rule generate_dag:
     output: 'dag.svg'
+    log: 'logs\\dag.log'
+    conda: 'envs/default.yaml'
     shell: 'snakemake --dag spbu_diploma/main_example.pdf | dot -Tsvg > dag.svg'
