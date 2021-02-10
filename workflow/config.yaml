@@ -10,10 +10,12 @@ tickers_desc:
 
 #models: [test, fourier, wavelet, baseline, arima, var]
 models: [test, wavelet, baseline, arima, var]
-n_pred: '10'
-n_trade: '3'
+n_pred: 10
+n_trade: 3
 models_trade: [logistic, ridge]
 trade_budget: 15000
+thresh_trade_hist: 5
+trade_instrument_hist: BTC-USD
 date_start: '2020-12-01'
 date_end: '2020-12-30'
 metrics: [MAE, MAPE]

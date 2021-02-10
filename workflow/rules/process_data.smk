@@ -1,4 +1,3 @@
-include: 'download_data.smk'
 
 
 rule interim:
@@ -16,10 +15,4 @@ rule processed:
     conda: 'envs/default.yaml' # noqa
     shell: 'python -m src.data.to_processed --input "{input}" --output {output}'
 
-rule trade_data:
-    input: rules.processed.output
-    output: 'data\\processed\\trade\\{ticker}.csv'
-    params: n=config['n_trade']
-    log: 'logs\\trade_data\\{ticker}.log'
-    conda: 'envs/default.yaml' # noqa
-    shell: 'python -m src.data.to_trade --input {input} --output {output} --n {params.n}'
+

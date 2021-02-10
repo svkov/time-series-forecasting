@@ -1,6 +1,4 @@
 include: 'utils.smk'
-include: 'process_data.smk'
-include: 'reports.smk'
 # forecast time series
 
 rule forecast_model:
@@ -33,22 +31,3 @@ rule aggregate_forecast:
     log: 'logs\\aggregate_forecast\\{ticker}.log'
     conda: 'envs/default.yaml' # noqa
     shell: 'python -m src.forecasting.aggregate_forecast --input "{input}" --output {output}'
-
-
-# _________________________________________________
-# forecast trade
-rule forecast_trade:
-    input:
-        input=rules.trade_data.output,
-        window=rules.best_window_sizes.output
-    output:
-          'reports\\trade\\forecast\\{ticker}.json'
-    params:
-          n=config['n_trade'],
-          model_types=config['models_trade']
-    log: 'logs\\forecast_trade\\{ticker}.log'
-    conda: 'envs/default.yaml' # noqa
-    shell:
-         'python -m src.forecasting.forecast_trade_model --input {input.input}'
-         ' --output {output} --window {input.window}'
-         ' --n {params.n} --model_types "{params.model_types}"'

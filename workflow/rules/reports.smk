@@ -1,6 +1,3 @@
-include: 'process_data.smk'
-include: 'forecast.smk'
-
 rule plot_raw:
     input: rules.download_yahoo.output
     output: 'reports\\figures_raw\\{ticker}.png'
@@ -65,36 +62,3 @@ rule best_metrics:
     log: 'logs\\best_metrics\\log.logs'
     conda: 'envs/default.yaml' # noqa
     shell: 'python -m src.plots.best_metrics --input "{input}" --output {output}'
-
-rule best_window_sizes:
-    input: rules.trade_data.output
-    output: 'reports\\trade\\window_sizes\\{ticker}.json'
-    params: n=config['n_trade'], models=config['models_trade']
-    log: 'logs\\best_window_sizes\\{ticker}.log'
-    conda: 'envs/default.yaml' # noqa
-    shell: 'python -m src.data.find_best_window_size_trade --input {input} --output {output} --n {params.n} --model_types "{params.models}"'
-
-rule plot_trade_accuracy:
-    input: rules.forecast_trade.output
-    output: 'reports\\trade\\figures_accuracy\\{ticker}.png'
-    params: n=config['n_trade']
-    log: 'logs\\plot_trade_accuracy\\{ticker}.log'
-    conda: 'envs/default.yaml' # noqa
-    shell: 'python -m src.plots.plot_trade_accuracy --input {input} --output {output} --n {params.n}'
-
-rule play_simulation:
-    input: rules.forecast_trade.output
-    output: 'reports\\trade\\simulation\\logs\\{ticker}_{model_type}.csv'
-    params: n=config['n_trade'], budget=config['trade_budget']
-    log: 'logs\\play_simulation\\{ticker}\\{model_type}.log'
-    conda: 'envs/default.yaml' # noqa
-    shell: 'python -m src.plots.play_simulation --input {input} --output {output}' \
-    ' --n {params.n} --model_type {wildcards.model_type} --budget {params.budget}'
-
-rule simulation_results:
-    input: expand('reports\\trade\\simulation\\logs\\{ticker}_{model_type}.csv', ticker=config['tickers'], model_type=config['models_trade'])
-    output: 'reports\\trade\\simulation\\result.csv'
-    params: budget=config['trade_budget']
-    log: 'logs\\simulation_results.log'
-    conda: 'envs/default.yaml' # noqa
-    shell: 'python -m src.plots.simulation_results --input "{input}" --output {output} --budget {params.budget}'
