@@ -64,3 +64,12 @@ rule trade_hists:
     conda: 'envs/default.yaml' # noqa
     params: n=config['n_trade'], thresh=config['thresh_trade_hist'], instrument=config['trade_instrument_hist']
     shell: 'python -m src.plots.trade_hists --input {input} --output {output} --n {params.n} --thresh {params.thresh} --instrument {params.instrument}'
+
+rule plot_function_to_optimize:
+    input: rules.processed.output
+    output: 'reports\\trade\\figures\\function_to_optimize.png'
+    log: 'logs\\trade\\trade_hist.log'
+    conda: 'envs/default.yaml' # noqa
+    params: n=config['n_trade'], instrument=config['trade_instrument_hist'], freq=config['trade_imbalance_freq']
+    shell: 'python -m src.plots.plot_trade_function_to_optimize --input {input} --output {output}'
+           ' --n {params.n} --instrument {params.instrument} --freq {params.freq}'

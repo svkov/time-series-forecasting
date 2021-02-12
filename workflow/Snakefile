@@ -23,7 +23,8 @@ rule all:
         diploma='reports\\diploma.tex',
         final='spbu_diploma\\main_example.pdf',
         forecast_metrics='reports\\forecast\\metrics\\best\\metrics.csv',
-        trade_hist='reports\\trade\\figures\\hist.png'
+        trade_hist='reports\\trade\\figures\\hist.png',
+        imbalance_plots='reports\\trade\\figures\\function_to_optimize.png'
     log: 'logs/all.log'
     conda: 'envs/default.yaml'
     shell:
