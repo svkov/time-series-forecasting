@@ -8,13 +8,13 @@ from sklearn.metrics import accuracy_score
 warnings.simplefilter("ignore")
 
 models = {
-    'logistic': LogisticRegression(),
-    'random_forest': RandomForestClassifier(),
-    'ridge': RidgeClassifier(),
+    'logistic': LogisticRegression,
+    'random_forest': RandomForestClassifier,
+    'ridge': RidgeClassifier,
 }
 
 
-def choose_best_window_size(df, n, model_type, delta=None, verbose=False):
+def choose_best_window_size(df, n, **kwargs):
     """
     Find best window size for df, n and model type.
     Window sizes founds in interval [n - delta, n + delta]
@@ -25,22 +25,18 @@ def choose_best_window_size(df, n, model_type, delta=None, verbose=False):
     :param model_type: models from get_model
     :return: (best_accuracy, window_size)
     """
-    if delta is None:
-        delta = int(n // 2)
-    else:
-        # If delta if function
-        try:
-            delta = delta(n)
-        except TypeError:  # If delta is a number
-            delta = int(delta)
 
+    accuracies_by_win_len = get_df_of_accuracies_by_window_len_range(df, n, **kwargs)
+    acc, window = accuracies_by_win_len.loc[accuracies_by_win_len['accuracy'].argmax()]
+    return acc, window
+
+
+def get_df_of_accuracies_by_window_len_range(df, n, delta=None, verbose=False, model_type='logistic'):
     accuracies = []
     window_sizes = []
 
-    start_win = n - delta
-    end_win = n + delta
-    if n - delta <= 1:
-        start_win = 1
+    delta = process_delta(delta, n)
+    start_win, end_win = generate_window_len_range(n, delta)
 
     for window_len in range(start_win, end_win):
         if verbose:
@@ -54,17 +50,33 @@ def choose_best_window_size(df, n, model_type, delta=None, verbose=False):
         if verbose:
             print(f'Accuracy: {acc * 100:.7f}% for window_len {window_len}\n')
 
-    ac = pd.DataFrame({'accuracy': accuracies, 'window': window_sizes})
-    acc, window = ac.loc[ac['accuracy'].argmax()]
-    return acc, window
+    return pd.DataFrame({'accuracy': accuracies, 'window': window_sizes})
+
+
+def process_delta(delta, n):
+    if delta is None:
+        delta = int(n // 2)
+    else:
+        # If delta if function
+        try:
+            delta = delta(n)
+        except TypeError:  # If delta is a number
+            delta = int(delta)
+    return delta
+
+
+def generate_window_len_range(n, delta):
+    start_win = n - delta
+    end_win = n + delta
+    if n - delta <= 1:
+        start_win = 1
+    return start_win, end_win
 
 
 def accuracy_by_window_len_cross_valid(df, window_len, model_type='logistic'):
-    #     train, test = train_test_split(df)
     accuracies = []
     for train, test in get_cv_train_test(df, train_size=0.95):
         accuracy = get_accuracy(train, test, window_len, model_type)
-        # print('Accuracy', accuracy)
         accuracies.append(accuracy)
     return sum(accuracies) / len(accuracies)
 
@@ -106,7 +118,7 @@ def fit_model(x_train, y_train, model_type='logistic'):
 def get_model(model_type='logistic'):
     if model_type not in models:
         raise ValueError(f'Invalid model "{model_type}" requested. Available models: {get_model_names()}')
-    return models[model_type]
+    return models[model_type]()
 
 
 def get_model_names():
@@ -125,4 +137,3 @@ def get_x(train, test, x_columns):
 
 def get_y(train, test):
     return train.label, test.label
-
