@@ -16,14 +16,14 @@ def trade_hists(input, output, n, instrument, thresh):
     thresh = float(thresh)
     df1 = read_data(input)
     df1 = make_labels(df1, f'{instrument} Close', n=n, thresh=thresh).dropna()
-    df2 = prepare_data_without_window(input, instrument=instrument, n=n, bounds=[0.1, 20])
+    df2, optimal_thresh = prepare_data_without_window(input, instrument=instrument, n=n, bounds=[0.1, 20], return_thresh=True)
 
     fig = go.Figure()
     fig.add_trace(go.Histogram(
         x=df1.label,
         histnorm='percent',
-        name='До балансировки',  # name used in legend and hover labels
-        xbins=dict(  # bins used for histogram
+        name=f'До балансировки, t={thresh:.1f}',
+        xbins=dict(
             start=-4.0,
             end=3.0,
             size=0.5
@@ -33,7 +33,7 @@ def trade_hists(input, output, n, instrument, thresh):
     fig.add_trace(go.Histogram(
         x=df2.label,
         histnorm='percent',
-        name='После балансировки',
+        name=f'После балансировки, t={optimal_thresh:.1f}',
         xbins=dict(
             start=-3.0,
             end=4,
@@ -43,7 +43,7 @@ def trade_hists(input, output, n, instrument, thresh):
     ))
 
     fig.update_layout(
-        title_text='Распределение классов до и после балансировки',  # title of plot
+        title_text=f'Распределение классов до и после балансировки',  # title of plot
     )
     save_plotly_fig(fig, output)
 
