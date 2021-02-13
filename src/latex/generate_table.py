@@ -39,17 +39,6 @@ from src.utils.click_commands import InputCommand
 """
 
 
-def df_to_latex(df: pd.DataFrame, caption):
-    body = ''
-    columns_width = [1.5 for i in range(df.index.nlevels)] + [1.5 for i in range(len(df.columns))]
-
-    body += generate_columns(df.index.names, df.columns)
-    for name, row in df.iterrows():
-        row = generate_row(name, row)
-        body += row
-    body += '\\hline\n'
-    return generate_table_header(body, caption, columns_width)
-
 
 @send_to_telegram_if_fails
 @click.command(cls=InputCommand)

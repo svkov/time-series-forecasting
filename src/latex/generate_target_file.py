@@ -6,41 +6,6 @@ from src.utils import send_to_telegram_if_fails
 from src.utils.click_commands import InputCommand
 
 
-def generate_header(body):
-    if not isinstance(body, str):
-        raise ValueError(f'body должен быть строкой, вместо этого {type(body)}')
-    return f"""
-    \\documentclass[12pt]{{article}}
-    \\usepackage{{graphicx}}
-    \\begin{{document}}
-    {body}
-    \\end{{document}}
-    """
-
-
-def generate_figure(path, name, label):
-    return f"""
-    
-    \\begin{{figure}}[ht]
-    \\begin{{center}}
-    \\scalebox{{0.4}}{{
-       \\includegraphics{{{path}}}
-    }}
-
-    \\caption{{
-    \\label{{{label}}}
-         {name}.}}
-    \\end {{center}}
-    \\end {{figure}}
-    
-    """
-
-
-def concat_parts(*parts):
-    for part in parts:
-        if not isinstance(part, str):
-            raise ValueError(f'Тип куска: {type(part)}, должно быть str')
-    return '\n'.join(parts)
 
 
 @send_to_telegram_if_fails
