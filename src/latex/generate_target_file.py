@@ -3,6 +3,7 @@ import os
 import click
 
 from src.utils import send_to_telegram_if_fails
+from src.utils.click_commands import InputCommand
 
 
 def generate_header(body):
@@ -43,9 +44,7 @@ def concat_parts(*parts):
 
 
 @send_to_telegram_if_fails
-@click.command()
-@click.option('--input')
-@click.option('--output')
+@click.command(cls=InputCommand)
 def generate(input, output):
     path_to_figures = input.replace('\\', '/').split()
     name = 'Какое-то название'

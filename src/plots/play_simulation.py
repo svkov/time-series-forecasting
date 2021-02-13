@@ -4,6 +4,8 @@ import numpy as np
 from src.plots.plot_trade_accuracy import open_json
 import pandas as pd
 
+from src.utils.click_commands import InputCommand
+
 
 def map_int_to_str(x):
     if x == 0:
@@ -37,13 +39,11 @@ def play(simulation_df, model, cap=15000):
     return cap, log
 
 
-@click.command()
-@click.option('--input')
-@click.option('--output')
+@click.command(cls=InputCommand)
 @click.option('--n')
 @click.option('--budget')
 @click.option('--model_type')
-def play_simulation(input, output, n, budget, model_type):
+def play_simulation(input, output, logs, n, budget, model_type):
     budget = int(budget)
     n = int(n)
     res = open_json(input)

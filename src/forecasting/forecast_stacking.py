@@ -8,16 +8,15 @@ import click
 from src.forecasting.forecasting_methods import *
 from src.models.stacking import Stacking
 from src.utils import send_to_telegram_if_fails
+from src.utils.click_commands import InputCommand
 
 
 @send_to_telegram_if_fails
-@click.command()
-@click.option('--input')
+@click.command(cls=InputCommand)
 @click.option('--input_all')
-@click.option('--output')
 @click.option('--models')
 @click.option('--ticker')
-def forecast_stacking(input, input_all, output, models, ticker):
+def forecast_stacking(input, output, logs, input_all, models, ticker):
     models = models.split()
 
     data = []

@@ -8,13 +8,12 @@ import click
 from src.forecasting.forecasting_methods import *
 from src.models.stacking import Stacking
 from src.utils import send_to_telegram_if_fails
+from src.utils.click_commands import InputCommand
 
 
 @send_to_telegram_if_fails
-@click.command()
-@click.option('--input')
-@click.option('--output')
-def aggregate_forecast(input, output):
+@click.command(cls=InputCommand)
+def aggregate_forecast(input, output, **kwargs):
     forecasts = input.split()
 
     final_df = pd.DataFrame()

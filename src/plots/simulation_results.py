@@ -2,14 +2,14 @@ import os
 import click
 import pandas as pd
 
+from src.utils.click_commands import InputCommand
+
 
 def profit(revenue, cost):
     return (revenue - cost) / cost * 100
 
 
-@click.command()
-@click.option('--input')
-@click.option('--output')
+@click.command(cls=InputCommand)
 @click.option('--budget')
 def simulation_results(input, output, budget):
     budget = int(budget)

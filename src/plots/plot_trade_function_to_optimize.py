@@ -12,7 +12,7 @@ import plotly.express as px
 @click.option('--n')
 @click.option('--instrument')
 @click.option('--freq')
-def plot_trade_function_to_optimize(input, output, n, instrument, freq):
+def plot_trade_function_to_optimize(input, output, logs, n, instrument, freq):
     n = int(n)
     freq = int(freq)
 

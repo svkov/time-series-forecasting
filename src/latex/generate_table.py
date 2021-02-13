@@ -5,6 +5,8 @@ from src.utils import send_to_telegram_if_fails
 from src.latex import generate_columns, generate_row, generate_table_header
 import click
 
+from src.utils.click_commands import InputCommand
+
 """
 \begin{center}
     \begin{longtable}{|p{2cm}|p{3cm}|p{7cm}|p{3cm}|}
@@ -50,9 +52,7 @@ def df_to_latex(df: pd.DataFrame, caption):
 
 
 @send_to_telegram_if_fails
-@click.command()
-@click.option('--input')
-@click.option('--output')
+@click.command(cls=InputCommand)
 def generate_table(input, output):
     path_to_tables = input.split()
     full_df = pd.DataFrame()

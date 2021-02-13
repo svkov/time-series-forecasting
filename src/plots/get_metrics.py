@@ -4,6 +4,7 @@ import os
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from src.plots import get_results
 from src.utils import mean_absolute_percentage_error, send_to_telegram_if_fails
+from src.utils.click_commands import InputCommand
 
 metrics_map = {
     'MAE': mean_absolute_error,
@@ -29,14 +30,12 @@ def get_metrics_df(results, metrics_list):
 
 
 @send_to_telegram_if_fails
-@click.command()
-@click.option('--input')
-@click.option('--output')
+@click.command(cls=InputCommand)
 @click.option('--name')
 @click.option('--models')
 @click.option('--n_pred')
 @click.option('--metrics')
-def get_metrics(input, output, name, models, n_pred, metrics):
+def get_metrics(input, output, logs, name, models, n_pred, metrics):
     n_pred = int(n_pred)
     df = pd.read_csv(input, index_col=0, parse_dates=True)
     results = get_results(df, models, n_pred)

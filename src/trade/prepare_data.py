@@ -120,8 +120,3 @@ def calculate_imbalance(df, column='label', num_of_classes=3):
         ratio = n_i / N
         error += (ideal_param - ratio) ** 2
     return error / N
-
-
-
-
-

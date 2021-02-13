@@ -7,6 +7,7 @@ import plotly.graph_objects as go
 import os
 import sys
 from src.utils import save_plotly_fig
+from src.utils.click_commands import InputCommand
 
 
 def open_json(path):
@@ -39,11 +40,9 @@ def plot_result_df(res_df):
     return fig
 
 
-@click.command()
-@click.option('--input')
-@click.option('--output')
+@click.command(cls=InputCommand)
 @click.option('--n')
-def plot_trade_accuracy(input, output, n):
+def plot_trade_accuracy(input, output, logs, n):
     n = int(n)
     res = open_json(input)
     res_df = get_result_df(res, n)

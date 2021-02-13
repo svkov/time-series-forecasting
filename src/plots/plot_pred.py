@@ -8,6 +8,7 @@ from typing import Callable
 
 from src.plots import get_results
 from src.utils import send_to_telegram_if_fails
+from src.utils.click_commands import InputCommand
 
 
 def get_fig(df: pd.DataFrame, name: str, metric: Callable, n_pred) -> go.Figure:
@@ -26,13 +27,11 @@ def save_fig(fig: go.Figure, path):
 
 
 @send_to_telegram_if_fails
-@click.command()
-@click.option('--input')
-@click.option('--output')
+@click.command(cls=InputCommand)
 @click.option('--name')
 @click.option('--models')
 @click.option('--n_pred')
-def plot_pred(input, output, name, models, n_pred):
+def plot_pred(input, output, logs, name, models, n_pred):
     """
 
     :param input: Список путей до предсказания одной модели (без стекинга)

@@ -4,15 +4,14 @@ import pandas as pd
 
 from src.trade.model import get_cv_train_test, fit_predict
 from src.trade.prepare_data import generate_window
+from src.utils.click_commands import InputCommand
 
 
-@click.command()
-@click.option('--input')
-@click.option('--output')
+@click.command(cls=InputCommand)
 @click.option('--window')
 @click.option('--n')
 @click.option('--model_types')
-def forecast_trade(input, output, window, n, model_types):
+def forecast_trade(input, output, logs, window, n, model_types):
     n = int(n)
     model_types = model_types.split()
     with open(window) as file:

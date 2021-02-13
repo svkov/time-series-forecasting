@@ -3,6 +3,8 @@ import click
 import os
 import telegram_send
 
+from src.utils.click_commands import InputCommand
+
 
 def parse_row(name, row):
     argmin = row.argmin()
@@ -18,10 +20,8 @@ def send_df_to_telegram(df):
     telegram_send.send(messages=[message], parse_mode='markdown')
 
 
-@click.command()
-@click.option('--input')
-@click.option('--output')
-def best_metrics(input, output):
+@click.command(cls=InputCommand)
+def best_metrics(input, output, logs):
     input = input.split()
     full_df = pd.DataFrame()
     for i in input:
