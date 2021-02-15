@@ -9,4 +9,11 @@ class InputCommand(click.core.Command):
         log_option = click.core.Option(('--logs',), help='Path to log file')
         self.params.insert(0, input_option)
         self.params.insert(0, output_option)
+        self.params.insert(0, log_option)
 
+
+class LatexPictureCommand(InputCommand):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        name_option = click.core.Option(('--name',), help='Text under the picture')
+        self.params.insert(0, name_option)

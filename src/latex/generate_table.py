@@ -6,12 +6,12 @@ from src.latex.latex_generator import LatexTableGenerator
 from src.utils import send_to_telegram_if_fails
 import click
 
-from src.utils.click_commands import InputCommand
+from src.utils.click_commands import InputCommand, LatexPictureCommand
 
 
 @send_to_telegram_if_fails
-@click.command(cls=InputCommand)
-def generate_table(input, output):
+@click.command(cls=LatexPictureCommand)
+def generate_table(input, output, logs, name):
     path_to_tables = input.split()
     full_df = pd.DataFrame()
     for path in path_to_tables:
@@ -23,7 +23,8 @@ def generate_table(input, output):
     full_df = full_df.set_index(['ticker', 'metric'])
 
     table = LatexTableGenerator()
-    table.df_to_latex(full_df, 'Результаты')
+    # name = "результаты"
+    table.df_to_latex(full_df, name)
     table.save(output)
 
 

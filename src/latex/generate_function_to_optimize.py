@@ -1,12 +1,12 @@
 import click
 
 from src.latex.latex_generator import LatexPictureGenerator
-from src.utils.click_commands import InputCommand
+from src.utils.click_commands import InputCommand, LatexPictureCommand
 
 
-@click.command(cls=InputCommand)
-def generate_function_to_optimize(input, output):
-    pic = LatexPictureGenerator(path=input, name='Функция для оптимизации', label='graph-optimization')
+@click.command(cls=LatexPictureCommand)
+def generate_function_to_optimize(input, output, logs, name):
+    pic = LatexPictureGenerator(path=input, name=name, label='graph-optimization')
     pic.save(output)
 
 
