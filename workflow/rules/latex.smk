@@ -1,3 +1,8 @@
+rule generate_hist_balance:
+    input: 'reports\\trade\\figures\\hist.png'
+    output: 'reports\\balance.tex'
+    shell: 'python -m src.latex.generate_balance_hist --input {input} --output {output}'
+
 rule generate_function_to_optimize_plot:
     input: 'reports\\trade\\figures\\function_to_optimize.png'
     output: 'reports\\function_to_optimize.tex'
@@ -33,6 +38,7 @@ rule generate_all:
          rules.generate_result_table.output,
          rules.generate_ticker_table.output,
          rules.generate_function_to_optimize_plot.output,
+         rules.generate_hist_balance.output,
          'spbu_diploma\\main_example.tex'
     output: 'spbu_diploma\\main_example.pdf'
     log: 'logs\\generate_all.log'
