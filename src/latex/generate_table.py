@@ -1,43 +1,12 @@
 import os
 
 import pandas as pd
+
+from src.latex.latex_generator import LatexTableGenerator
 from src.utils import send_to_telegram_if_fails
-from src.latex import generate_columns, generate_row, generate_table_header
 import click
 
 from src.utils.click_commands import InputCommand
-
-"""
-\begin{center}
-    \begin{longtable}{|p{2cm}|p{3cm}|p{7cm}|p{3cm}|}
-    \caption{Заголовок таблицы}\\
-    \hline
-    1 & 2 & 3 & 4\\ 
-    \hline 
-    2 & 2 & 3 & 4\\
-    \hline
-    3 & 2 & 3 & 4\\
-    \hline
-    4 & 2 & 3 & 4\\
-    \hline
-    5 & 2 & 3 & 4\\
-    \hline
-    6 & 2 & 3 & 4\\
-    \hline
-    7 & 2 & 3 & 4\\
-    \hline
-    8 & 2 & 3 & 4\\
-    \hline
-    9 & 2 & 3 & 4\\
-    \hline
-    10 & 2 & 3 & 4\\
-    \hline
-    
-    
-    \end{longtable}
-\end{center}
-"""
-
 
 
 @send_to_telegram_if_fails
@@ -52,10 +21,10 @@ def generate_table(input, output):
         full_df = full_df.append(df)
     full_df['metric'] = full_df.index
     full_df = full_df.set_index(['ticker', 'metric'])
-    table = df_to_latex(full_df, 'Результаты')
 
-    with open(output, 'w', encoding='utf-8') as f:
-        f.write(table)
+    table = LatexTableGenerator()
+    table.df_to_latex(full_df, 'Результаты')
+    table.save(output)
 
 
 if __name__ == '__main__':

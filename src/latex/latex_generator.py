@@ -4,7 +4,7 @@ import pandas as pd
 class LatexGenerator:
     content = ''
 
-    def __init__(self, content, **kwargs):
+    def __init__(self, content='', **kwargs):
         self.content = content
 
     def generate_header(self, body):
@@ -19,23 +19,35 @@ class LatexGenerator:
                         """
 
     def concat_parts(self, *parts):
-        for part in parts:
-            if not isinstance(part, str):
-                raise ValueError(f'Тип куска: {type(part)}, должно быть str')
+        try:
+            parts = [str(part) for part in parts]
+        except ValueError as e:
+            raise ValueError(f'Ошибка при конкатенации латеха: {e}')
+
         self.content += '\n'.join(parts)
 
-    def save_latex(self, path):
+    def save(self, path):
         with open(path, 'w', encoding='utf-8') as f:
             f.write(self.content)
+
+    def clear(self):
+        self.content = ''
+
+    def __repr__(self):
+        return self.content
 
 
 class LatexPictureGenerator(LatexGenerator):
 
-    def __init__(self, content, path, **kwargs):
+    def __init__(self, content='', path=None, name=None, label=None, **kwargs):
         super().__init__(content, **kwargs)
         self.path = path
+        self.name = name
+        self.label = label
 
-    def generate_figure(self, name, label):
+        self.generate_figure()
+
+    def generate_figure(self):
         self.content += f"""
 
         \\begin{{figure}}[ht]
@@ -45,8 +57,8 @@ class LatexPictureGenerator(LatexGenerator):
         }}
 
         \\caption{{
-        \\label{{{label}}}
-             {name}.}}
+        \\label{{{self.label}}}
+             {self.name}.}}
         \\end {{center}}
         \\end {{figure}}
 
@@ -54,55 +66,88 @@ class LatexPictureGenerator(LatexGenerator):
 
 
 class LatexTableGenerator(LatexGenerator):
-    sep = '\\hline\n'
-    end = '\\\\\n'
-
-    def __init__(self, content, **kwargs):
-        super().__init__(content, **kwargs)
+    end_separator = '\\hline\n'
+    index_cell_width = 1.5
+    columns_cell_width = 1.5
 
     def df_to_latex(self, df: pd.DataFrame, caption):
-        body = ''
-        columns_width = [1.5 for i in range(df.index.nlevels)] + [1.5 for i in range(len(df.columns))]
+        columns_width = self._get_columns_width(df)
+        self._generate_columns(df)
+        self._generate_table_content(df)
+        self._wrap_table_with_header(caption, columns_width)
 
-        body += self.generate_columns(df.index.names, df.columns)
-        for name, row in df.iterrows():
-            row = self.generate_row(name, row)
-            body += row
-        body += '\\hline\n'
-        return self.generate_table_header(body, caption, columns_width)
+    def _get_columns_width(self, df: pd.DataFrame):
+        index_width = [self.index_cell_width for _ in range(df.index.nlevels)]
+        columns_width = [self.columns_cell_width for _ in range(len(df.columns))]
+        return index_width + columns_width
 
-    def generate_table_header(self, body, caption, columns_width, label='result_table'):
-        if not isinstance(body, str):
-            raise ValueError(f'body должен быть строкой, вместо этого {type(body)}')
+    def _generate_columns(self, df: pd.DataFrame):
+        index_names = df.index.names
+        columns = df.columns
+        columns = list(index_names) + list(columns)
+        self.content += '\\hline\n' + ' & '.join([f'\\textbf{{{name}}}' for name in columns]) + '\\\\\n'
+
+    def _generate_table_content(self, df: pd.DataFrame):
+        rows = [LatexTableRow(name=name, row=row) for name, row in df.iterrows()]
+        self.concat_parts(*rows)
+        self._add_end_separator()
+
+    def _add_end_separator(self):
+        self.content += self.end_separator
+
+    def _wrap_table_with_header(self, caption, columns_width, label='result_table'):
         width = ''.join([f'|p{{{width}cm}}' for width in columns_width]) + '|'
-        self.content += f"""
+        self.content = f"""
         \\begin{{center}}
             \\begin{{longtable}}{{{width}}}
             \\caption{{{caption}}}\\label{{{label}}}\\\\
-                {body}
+                {self.content}
             \\end{{longtable}}
         \\end{{center}}
         """
 
-    def generate_row(self, name, row):
-        if isinstance(name, list) or isinstance(name, tuple):
-            name = list(name)
-            name = f'{name[0]} & {name[1]} & '
+
+class LatexTableRow(LatexGenerator):
+    sep = '\\hline\n'
+    end = '\\\\\n'
+
+    def __init__(self, name, row, **kwargs):
+        super().__init__(content='', **kwargs)
+        self.name = name
+        self.row = row
+
+        self._parse_index_name()
+        self._parse_row()
+
+        self._generate_row()
+
+    def _parse_index_name(self):
+        if isinstance(self.name, list) or isinstance(self.name, tuple):
+            names = list(self.name)
+            self.name = ' & '.join(names)
         else:
-            name = f'{name} & '
+            self.name = f'{self.name} & '
 
-        def process_row_value(x):
-            if isinstance(x, float):
-                return str(round(x, 1))
-            return str(x)
+    def _parse_row(self):
+        if not isinstance(self.row, list):
+            self.row = self.row.tolist()
+        self.row = ' & '.join(map(self._process_row_value, self.row))
 
-        if not isinstance(row, list):
-            row = row.tolist()
-        values = ' & '.join(map(process_row_value, row))
-        return self.sep + name + values + self.end
+    def _process_row_value(self, x):
+        if isinstance(x, float):
+            return str(round(x, 1))
+        return str(x)
 
-    def generate_columns(self, index_names, columns):
-        columns = list(index_names) + list(columns)
-        self.content += '\\hline\n' + ' & '.join([f'\\textbf{{{name}}}' for name in columns]) + '\\\\\n'
+    def _generate_row(self):
+        self.content = self.sep + self.name + self.row + self.end
 
 
+if __name__ == '__main__':
+    df = pd.DataFrame({'a': 1, 'b': 2}, index=[1, 2])
+    lg_table = LatexTableGenerator()
+    print(lg_table.content)
+    lg_table.df_to_latex(df, 'abc')
+    lg_table.save('test.tex')
+
+    lg_picture = LatexPictureGenerator(path='dag.svg.png')
+    lg_picture.save('text_picture.tex')
