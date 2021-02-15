@@ -5,7 +5,7 @@ include: 'rules\\process_data.smk' # noqa
 include: 'rules\\forecast.smk' # noqa
 include: 'rules\\reports.smk' # noqa
 include: 'rules\\trade.smk' # noqa
-
+include: 'rules\\latex.smk' # noqa
 
 rule all:
     input:
