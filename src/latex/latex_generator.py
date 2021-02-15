@@ -134,7 +134,7 @@ class LatexTableRow(LatexGenerator):
     def _parse_index_name(self):
         if isinstance(self.name, list) or isinstance(self.name, tuple):
             names = list(self.name)
-            self.name = ' & '.join(names)
+            self.name = ' & '.join(names) + ' & '
         else:
             self.name = f'{self.name} & '
 

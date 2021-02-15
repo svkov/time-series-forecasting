@@ -10,16 +10,15 @@ from src.utils.click_commands import InputCommand
 @send_to_telegram_if_fails
 @click.command(cls=InputCommand)
 def generate(input, output):
-    path_to_figures = input.replace('\\', '/').split()
+    paths = input.split()
 
     name = 'Какое-то название'
-    paths = [f'../{path}' for path in path_to_figures]
-    labels = [f'graph{i}' for i in range(len(path_to_figures))]
+    labels = [f'graph{i}' for i in range(len(paths))]
     pictures = LatexGenerator()
     generators = [LatexPictureGenerator(path=path,
                                         name=name,
                                         label=label) for path, label in zip(paths, labels)]
-    pictures.concat_parts(generators)
+    pictures.concat_parts(*generators)
     pictures.save(output)
 
 
