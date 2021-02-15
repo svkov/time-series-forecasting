@@ -1,3 +1,8 @@
+rule generate_function_to_optimize_plot:
+    input: 'reports\\trade\\figures\\function_to_optimize.png'
+    output: 'reports\\function_to_optimize.tex'
+    shell: 'python -m src.latex.generate_function_to_optimize --input {input} --output {output}'
+
 rule generate_latex:
     input: expand('reports\\forecast\\figures\\{ticker}.png', ticker=config['tickers']),
     output: 'reports\\diploma.tex'
@@ -27,6 +32,7 @@ rule generate_all:
          rules.generate_latex.output,
          rules.generate_result_table.output,
          rules.generate_ticker_table.output,
+         rules.generate_function_to_optimize_plot.output,
          'spbu_diploma\\main_example.tex'
     output: 'spbu_diploma\\main_example.pdf'
     log: 'logs\\generate_all.log'

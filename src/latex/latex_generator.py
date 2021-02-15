@@ -39,11 +39,15 @@ class LatexGenerator:
 
 class LatexPictureGenerator(LatexGenerator):
 
-    def __init__(self, content='', path=None, name=None, label=None, **kwargs):
+    def __init__(self, content='', path=None, name=None, label=None, windows_path=True, **kwargs):
         super().__init__(content, **kwargs)
         self.path = path
         self.name = name
         self.label = label
+
+        if windows_path:
+            self._windows_path_to_tex()
+        self._process_path()
 
         self.generate_figure()
 
@@ -63,6 +67,12 @@ class LatexPictureGenerator(LatexGenerator):
         \\end {{figure}}
 
         """
+
+    def _process_path(self):
+        self.path = f'../{self.path}'
+
+    def _windows_path_to_tex(self):
+        self.path = self.path.replace('\\', '/')
 
 
 class LatexTableGenerator(LatexGenerator):
