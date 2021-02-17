@@ -3,16 +3,11 @@ import pandas as pd
 
 from src.forecasting.forecasting_methods import *
 from src.utils import send_to_telegram_if_fails
-from src.utils.click_commands import InputCommand
+from src.utils.click_commands import InputCommand, ModelCommand
 
 
 @send_to_telegram_if_fails
-@click.command(cls=InputCommand)
-@click.option('--n_pred')
-@click.option('--date_start')
-@click.option('--date_end')
-@click.option('--model')
-@click.option('--ticker')
+@click.command(cls=ModelCommand)
 def forecast_click(input, output, n_pred, date_start, date_end, model, ticker, **kwargs):
     n_pred = int(n_pred)
     df = pd.read_csv(input, index_col='Date', parse_dates=True)

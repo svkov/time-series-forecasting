@@ -9,6 +9,14 @@ rule forecast_model:
     conda: 'envs/default.yaml' # noqa
     shell: 'python -m src.forecasting.forecast_model --input {input} --output {output} --n_pred {params.n_pred} --date_start {params.date_start} --date_end {params.date_end} --model {wildcards.model} --ticker {wildcards.ticker}'
 
+rule forecast_nn:
+    input: rules.processed.output
+    output: 'reports\\forecast\\nn_{ticker}.csv'
+    params: n_pred=config['n_pred'], date_start=config['date_start'], date_end=config['date_end']
+    log: 'logs\\nn_{ticker}.csv'
+    conda: 'envs/default.yaml' # noqa
+    shell: 'python -m src.models.nn --input {input} --output {output} --n_pred {params.n_pred} --date_start {params.date_start} --date_end {params.date_end} --ticker {wildcards.ticker}'
+
 
 rule forecast_stacking:
     input:
