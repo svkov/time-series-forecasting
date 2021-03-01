@@ -80,6 +80,24 @@ class LatexTableGenerator(LatexGenerator):
     index_cell_width = 1.5
     columns_cell_width = 1.5
 
+    def __init__(self, content='', path=None, caption='', label='', **kwargs):
+        super().__init__(content)
+
+        if path is not None:
+            self.path = path
+            self.caption = caption
+            self.label = label
+            self.df = None
+            self._read_csv(**kwargs)
+            print(self.df)
+            self.append_df_to_content()
+
+    def _read_csv(self, **kwargs):
+        self.df = pd.read_csv(self.path, **kwargs)
+
+    def append_df_to_content(self):
+        self.df_to_latex(self.df, self.caption, self.label)
+
     def df_to_latex(self, df: pd.DataFrame, caption, label):
         columns_width = self._get_columns_width(df)
         self._generate_columns(df)

@@ -8,7 +8,7 @@ import yaml
 
 @send_to_telegram_if_fails
 @click.command(cls=LatexPictureCommand)
-def generate(input, output, logs, name, labels):
+def generate_target_file(input, output, logs, name, labels):
     paths = input.split()
 
     data = read_yaml(labels)
@@ -24,4 +24,4 @@ def generate(input, output, logs, name, labels):
 
 
 if __name__ == '__main__':
-    generate()  # noqa
+    generate_target_file()  # noqa

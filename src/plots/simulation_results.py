@@ -11,7 +11,8 @@ def profit(revenue, cost):
 
 @click.command(cls=InputCommand)
 @click.option('--budget')
-def simulation_results(input, output, budget):
+@click.option('--logs')
+def simulation_results(input, output, budget, logs):
     budget = int(budget)
     input = input.split()
 
@@ -37,7 +38,7 @@ def simulation_results(input, output, budget):
         'models': models,
         'start_budget': [budget for _ in range(len(tickers))],
         'budget': caps,
-        'profit%': profits
+        'profit': profits
     }
     results = pd.DataFrame(results)
     results.to_csv(output)
