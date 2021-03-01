@@ -17,6 +17,7 @@ class LatexPictureCommand(InputCommand):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.add_option('--name', 'Text under the picture')
+        self.add_option('--labels', 'Path to labels.yaml')
 
 
 class ModelCommand(InputCommand):

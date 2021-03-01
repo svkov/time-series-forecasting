@@ -25,7 +25,7 @@ rule all:
         forecast_metrics='reports\\forecast\\metrics\\best\\metrics.csv',
         trade_hist='reports\\trade\\figures\\hist.png',
         imbalance_plots='reports\\trade\\figures\\function_to_optimize.png',
-        nn=expand('reports\\forecast\\nn_{ticker}.csv', ticker=config['tickers'])
+        # nn=expand('reports\\forecast\\nn_{ticker}.csv', ticker=config['tickers'])
     log: 'logs/all.log'
     conda: 'envs/default.yaml'
     shell:

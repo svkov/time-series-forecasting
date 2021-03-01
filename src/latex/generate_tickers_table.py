@@ -3,6 +3,7 @@ import yaml
 import pandas as pd
 
 from src.latex.latex_generator import LatexTableGenerator
+from src.utils import read_yaml
 
 
 def parse_config(config):
@@ -33,7 +34,7 @@ def save_tickers_table_df_in_latex(df, output, name):
     table_generator = LatexTableGenerator()
     table_generator.index_cell_width = 6
     table_generator.columns_cell_width = 10
-    table_generator.df_to_latex(df, name)
+    table_generator.df_to_latex(df, name, 'tickers_table')
     table_generator.save(output)
 
 
@@ -41,10 +42,13 @@ def save_tickers_table_df_in_latex(df, output, name):
 @click.option('--config')
 @click.option('--output')
 @click.option('--name')
-def generate_tickers_table(config, output, name):
+@click.option('--labels')
+def generate_tickers_table(config, output, name, labels):
     data = parse_config(config)
     df = generate_df_from_config_data(data)
-    save_tickers_table_df_in_latex(df, output, name)
+
+    data = read_yaml(labels)
+    save_tickers_table_df_in_latex(df, output, data[name])
 
 
 if __name__ == '__main__':

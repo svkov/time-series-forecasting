@@ -1,0 +1,6 @@
+# latex
+hist_balance_name: 'Диаграмма сбалансированности классов'
+function_to_optimize_name: 'Функция для оптимизации'
+latex_tickers_name: 'Какое-то название'
+results_table_name: 'Результаты'
+ticker_table_name: 'Биржевые показатели, взятые для анализа'

@@ -80,11 +80,11 @@ class LatexTableGenerator(LatexGenerator):
     index_cell_width = 1.5
     columns_cell_width = 1.5
 
-    def df_to_latex(self, df: pd.DataFrame, caption):
+    def df_to_latex(self, df: pd.DataFrame, caption, label):
         columns_width = self._get_columns_width(df)
         self._generate_columns(df)
         self._generate_table_content(df)
-        self._wrap_table_with_header(caption, columns_width)
+        self._wrap_table_with_header(caption, columns_width, label)
 
     def _get_columns_width(self, df: pd.DataFrame):
         index_width = [self.index_cell_width for _ in range(df.index.nlevels)]
@@ -105,7 +105,7 @@ class LatexTableGenerator(LatexGenerator):
     def _add_end_separator(self):
         self.content += self.end_separator
 
-    def _wrap_table_with_header(self, caption, columns_width, label='result_table'):
+    def _wrap_table_with_header(self, caption, columns_width, label):
         width = ''.join([f'|p{{{width}cm}}' for width in columns_width]) + '|'
         self.content = f"""
         \\begin{{center}}
@@ -156,7 +156,7 @@ if __name__ == '__main__':
     df = pd.DataFrame({'a': 1, 'b': 2}, index=[1, 2])
     lg_table = LatexTableGenerator()
     print(lg_table.content)
-    lg_table.df_to_latex(df, 'abc')
+    lg_table.df_to_latex(df, 'abc', 'abc')
     lg_table.save('test.tex')
 
     lg_picture = LatexPictureGenerator(path='dag.svg.png')

@@ -1,13 +1,14 @@
 import click
 
 from src.latex.latex_generator import LatexPictureGenerator
+from src.utils import read_yaml
 from src.utils.click_commands import InputCommand, LatexPictureCommand
 
 
 @click.command(cls=LatexPictureCommand)
-def generate_balance_hist(input, output, logs, name):
-    print(name)
-    pic = LatexPictureGenerator(path=input, name=name, label='graph-balance')
+def generate_balance_hist(input, output, logs, name, labels):
+    data = read_yaml(labels)
+    pic = LatexPictureGenerator(path=input, name=data[name], label='graph-balance')
     pic.save(output)
 
 

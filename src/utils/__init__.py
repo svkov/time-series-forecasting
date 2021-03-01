@@ -3,6 +3,7 @@ import pandas as pd
 from itertools import product
 from datetime import datetime, timedelta
 import telegram_send
+import yaml
 
 
 def validate_df(needed_columns, df_columns):
@@ -185,3 +186,9 @@ def send_to_telegram_if_fails(func, *args, **kwargs):
 
 def save_plotly_fig(fig, path):
     fig.write_image(path)
+
+
+def read_yaml(path):
+    with open(path, encoding='utf-8') as file:
+        data = yaml.load(file)
+    return data
