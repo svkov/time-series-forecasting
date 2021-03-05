@@ -6,49 +6,25 @@ from src.latex.latex_generator import LatexTableGenerator
 from src.utils import read_yaml
 
 
-def parse_config(config):
-    data = {}
-    with open(config, 'r', encoding='utf-8') as stream:
-        try:
-            data = yaml.safe_load(stream)['tickers_desc']
-        except yaml.YAMLError as e:
-            print(e)
-        except KeyError as e:
-            print('No key:', e, 'in', config)
-    return data
-
-
-def generate_df_from_config_data(data):
-    indices = []
-    descriptions = []
-    for row in data:
-        indices.append(list(row.keys())[0])
-        descriptions.append(row[indices[-1]])
-
-    df = pd.DataFrame({'Код инструмента': indices, 'Показатель': descriptions})
-    df = df.set_index('Код инструмента', drop=True)
-    return df
-
-
-def save_tickers_table_df_in_latex(df, output, name):
+def save_tickers_table_df_in_latex(df, output, name, label):
     table_generator = LatexTableGenerator()
     table_generator.index_cell_width = 6
     table_generator.columns_cell_width = 10
-    table_generator.df_to_latex(df, name, 'tickers_table')
+    table_generator.df_to_latex(df, name, label)
     table_generator.save(output)
 
 
 @click.command()
-@click.option('--config')
+@click.option('--input')
 @click.option('--output')
 @click.option('--name')
 @click.option('--labels')
-def generate_tickers_table(config, output, name, labels):
-    data = parse_config(config)
-    df = generate_df_from_config_data(data)
-
+def generate_tickers_table(input, output, name, labels):
+    df = pd.read_csv(input, index_col=0)
     data = read_yaml(labels)
-    save_tickers_table_df_in_latex(df, output, data[name])
+    table_name = data[name]['name']
+    table_label = data[name]['label']
+    save_tickers_table_df_in_latex(df, output, table_name, table_label)
 
 
 if __name__ == '__main__':

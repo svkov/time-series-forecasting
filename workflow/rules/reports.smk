@@ -34,3 +34,8 @@ rule aggregate_metrics:
     log: 'logs\\all_metrics\\metrics.log'
     conda: 'envs/default.yaml' # noqa
     shell: 'python -m src.plots.aggregate_metrics --input "{input}" --output {output} --logs {log}'
+
+rule ticker_description:
+    input: 'workflow\\config.yaml'
+    output: 'reports\\description\\tickers.csv'
+    shell: 'python -m src.plots.generate_ticker_description --input {input} --output {output}'

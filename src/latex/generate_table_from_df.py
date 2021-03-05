@@ -9,8 +9,16 @@ from src.utils.click_commands import LatexPictureCommand
 @click.command(cls=LatexPictureCommand)
 def generate_table(input, output, logs, name, labels):
     data = read_yaml(labels)
-    table_name = data[name]['name']
-    table_label = data[name]['label']
+    try:
+        table_name = data[name]['name']
+    except KeyError:
+        table_name = name
+
+    try:
+        table_label = data[name]['label']
+    except KeyError:
+        table_label = name
+
     pic = LatexTableGenerator(path=input, caption=table_name, label=table_label, index_col=0)
     pic.save(output)
 
