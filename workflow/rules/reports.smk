@@ -24,6 +24,13 @@ rule metrics:
 rule best_metrics:
     input: expand('reports\\forecast\\metrics\\{ticker}.csv', ticker=config['tickers']),
     output: 'reports\\forecast\\metrics\\best\\metrics.csv'
-    log: 'logs\\best_metrics\\log.logs'
+    log: 'logs\\best_metrics\\log.log'
     conda: 'envs/default.yaml' # noqa
     shell: 'python -m src.plots.best_metrics --input "{input}" --output {output}'
+
+rule aggregate_metrics:
+    input: expand('reports\\forecast\\metrics\\{ticker}.csv', ticker=config['tickers'])
+    output: 'reports\\forecast\\metrics\\all\\all.csv'
+    log: 'logs\\all_metrics\\metrics.log'
+    conda: 'envs/default.yaml' # noqa
+    shell: 'python -m src.plots.aggregate_metrics --input "{input}" --output {output} --logs {log}'

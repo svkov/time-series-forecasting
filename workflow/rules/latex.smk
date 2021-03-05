@@ -11,6 +11,7 @@ pictures = {
 
 tables = {
     'simulation_results': 'reports\\trade\\simulation\\result.csv',
+    'result_table': 'reports\\forecast\\metrics\\all\\all.csv',
 }
 
 rule generate_picture:
@@ -50,28 +51,19 @@ rule generate_ticker_table:
     shell:
         'python -m src.latex.generate_tickers_table --config {input} --output {output} --name "{params.name}"  --labels {labels}'
 
-rule generate_result_table:
-    input: expand('reports\\forecast\\metrics\\{ticker}.csv', ticker=config['tickers'])
-    output: 'reports\\result_table.tex'
-    log: 'logs\\generate_results_table.log'
-    conda: 'envs/default.yaml' # noqa
-    params: name='results_table_name'
-    shell: 'python -m src.latex.generate_table --input "{input}" --output {output} --name "{params.name}" --logs {log}  --labels {labels}'
-
-# rule generate_simulation_results:
-#     input: rules.simulation_results.output
-#     output: 'reports\\simulation_results.tex'
-#     log: 'logs\\generate_simultaion_results'
+# rule generate_result_table:
+#     input: expand('reports\\forecast\\metrics\\{ticker}.csv', ticker=config['tickers'])
+#     output: 'reports\\result_table.tex'
+#     log: 'logs\\generate_results_table.log'
 #     conda: 'envs/default.yaml' # noqa
-#     params: name='simulation_results_name'
-#     shell: 'python -m src.latex.generate_simulation_results --input {input} --output {output} --name {params.name} --logs {log} --labels {labels}'
+#     params: name='results_table_name'
+#     shell: 'python -m src.latex.generate_table --input "{input}" --output {output} --name "{params.name}" --logs {log}  --labels {labels}'
 
 rule generate_all:
     input:
          expand('reports\\latex\\pictures\\{picture}.tex', picture=pictures.keys()),
          expand('reports\\latex\\tables\\{table}.tex', table=tables.keys()),
          rules.generate_latex.output,
-         rules.generate_result_table.output,
          rules.generate_ticker_table.output,
          'spbu_diploma\\main_example.tex'
     output: 'spbu_diploma\\main_example.pdf'

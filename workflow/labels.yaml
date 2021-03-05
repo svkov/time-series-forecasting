@@ -9,7 +9,7 @@ function_to_optimize:
 latex_tickers:
   name: 'Какое-то название'
   label: 'graph_raw'
-results_table:
+result_table:
   name: 'Результаты'
   label: 'results_table'
 ticker_table:
