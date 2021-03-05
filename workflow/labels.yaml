@@ -12,9 +12,11 @@ latex_tickers:
 result_table:
   name: 'Результаты'
   label: 'results_table'
-tickers_table:
+tickers:
   name: 'Биржевые показатели, взятые для анализа'
   label: 'ticker_table'
+  index_width: 6
+  columns_width: 10
 
 simulation_results:
   name: 'Тест'

@@ -18,6 +18,7 @@ pictures.update(figures_forecast)
 tables = {
     'simulation_results': 'reports\\trade\\simulation\\result.csv',
     'result_table': 'reports\\forecast\\metrics\\all\\all.csv',
+    'tickers': 'reports\\description\\tickers.csv',
 }
 
 rule generate_picture:
@@ -35,24 +36,14 @@ rule generate_table:
     params: name=lambda wildcards, output: wildcards['table']
     log: 'logs\\table_{table}.log'
     run:
-        command = shell_template.format('generate_table_from_df', input, output, params, labels, log)
+        command = shell_template.format('generate_table', input, output, params, labels, log)
         shell(command)
-
-# replace path to config with values from it
-rule generate_ticker_table:
-    input: 'reports\\description\\tickers.csv'
-    output: 'reports\\tickers.tex'
-    log: 'logs\\generate_ticker_table.log'
-    conda: 'envs/default.yaml' # noqa
-    params: name='tickers_table'
-    shell:
-        'python -m src.latex.generate_tickers_table --input {input} --output {output} --name "{params.name}"  --labels {labels}'
 
 rule generate_all:
     input:
          expand('reports\\latex\\pictures\\{picture}.tex', picture=pictures.keys()),
          expand('reports\\latex\\tables\\{table}.tex', table=tables.keys()),
-         rules.generate_ticker_table.output,
+         # rules.generate_ticker_table.output,
          'spbu_diploma\\main_example.tex'
     output: 'spbu_diploma\\main_example.pdf'
     log: 'logs\\generate_all.log'

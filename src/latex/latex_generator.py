@@ -77,11 +77,11 @@ class LatexPictureGenerator(LatexGenerator):
 
 class LatexTableGenerator(LatexGenerator):
     end_separator = '\\hline\n'
-    index_cell_width = 1.5
-    columns_cell_width = 1.5
 
-    def __init__(self, content='', path=None, caption='', label='', **kwargs):
+    def __init__(self, content='', path=None, caption='', label='', index_cell_width=1.5, columns_cell_width=1.5, **kwargs):
         super().__init__(content)
+        self.index_cell_width = index_cell_width
+        self.columns_cell_width = columns_cell_width
 
         if path is not None:
             self.path = path

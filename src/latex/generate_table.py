@@ -1,36 +1,23 @@
-import os
-
-import pandas as pd
-import yaml
-
-from src.latex.latex_generator import LatexTableGenerator
-from src.utils import send_to_telegram_if_fails, read_yaml
 import click
 
-from src.utils.click_commands import InputCommand, LatexPictureCommand
+from src.latex import Config
+from src.latex.latex_generator import LatexTableGenerator
+from src.utils import send_to_telegram_if_fails, read_yaml
+from src.utils.click_commands import LatexPictureCommand
 
 
 @send_to_telegram_if_fails
 @click.command(cls=LatexPictureCommand)
 def generate_table(input, output, logs, name, labels):
-    path_to_tables = input.split()
-    full_df = pd.DataFrame()
+    config = Config(labels, name)
 
-    data = read_yaml(labels)
-
-    for path in path_to_tables:
-        ticker = os.path.split(path)[-1].replace('metrics_', '').replace('.csv', '')
-        df = pd.read_csv(path, index_col=0)
-        df['ticker'] = ticker
-        full_df = full_df.append(df)
-
-    full_df['metric'] = full_df.index
-    full_df = full_df.set_index(['ticker', 'metric'])
-
-    table = LatexTableGenerator()
-    # name = "результаты"
-    table.df_to_latex(full_df, data[name], label='result_table')
-    table.save(output)
+    pic = LatexTableGenerator(path=input,
+                              caption=config.get('name', name),
+                              label=config.get('label', name),
+                              index_col=config.get('index_col', 0),
+                              index_cell_width=config.get('index_width', 1.5),
+                              columns_cell_width=config.get('columns_width', 1.5))
+    pic.save(output)
 
 
 if __name__ == '__main__':
