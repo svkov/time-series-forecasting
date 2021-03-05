@@ -11,6 +11,7 @@ figures_forecast = {ticker: figures_template.format(ticker) for ticker in config
 pictures = {
     'function_to_optimize': 'reports\\trade\\figures\\function_to_optimize.png',
     'balance_hist': 'reports\\trade\\figures\\hist.png',
+    'figures_accuracy': 'reports\\trade\\figures_accuracy\\BTC-USD.png'
 }
 
 pictures.update(figures_forecast)
@@ -43,7 +44,6 @@ rule generate_all:
     input:
          expand('reports\\latex\\pictures\\{picture}.tex', picture=pictures.keys()),
          expand('reports\\latex\\tables\\{table}.tex', table=tables.keys()),
-         # rules.generate_ticker_table.output,
          'spbu_diploma\\main_example.tex'
     output: 'spbu_diploma\\main_example.pdf'
     log: 'logs\\generate_all.log'

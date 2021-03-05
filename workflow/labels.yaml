@@ -21,3 +21,7 @@ tickers:
 simulation_results:
   name: 'Тест'
   label: 'simulation_results_table'
+
+figures_accuracy:
+  name: 'Точность модели определения направления цены'
+  label: 'figures_accuracy'
