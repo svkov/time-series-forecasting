@@ -1,8 +1,21 @@
 # latex
-hist_balance_name: 'Диаграмма сбалансированности классов'
-function_to_optimize_name: 'Функция для оптимизации'
-latex_tickers_name: 'Какое-то название'
-results_table_name: 'Результаты'
-ticker_table_name: 'Биржевые показатели, взятые для анализа'
 
-simulation_results_name: 'Тест'
+balance_hist:
+  name: 'Диаграмма сбалансированности классов'
+  label: 'balance_hist'
+function_to_optimize:
+  name: 'Функция для оптимизации'
+  label: 'function_to_optimize'
+latex_tickers:
+  name: 'Какое-то название'
+  label: 'graph_raw'
+results_table:
+  name: 'Результаты'
+  label: 'results_table'
+ticker_table:
+  name: 'Биржевые показатели, взятые для анализа'
+  label: 'ticker_table'
+
+simulation_results:
+  name: 'Тест'
+  label: 'simulation_results_table'

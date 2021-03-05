@@ -6,11 +6,15 @@ from src.utils.click_commands import InputCommand, LatexPictureCommand
 
 
 @click.command(cls=LatexPictureCommand)
-def generate_function_to_optimize(input, output, logs, name, labels):
+def generate_picture(input, output, logs, name, labels):
     data = read_yaml(labels)
-    pic = LatexPictureGenerator(path=input, name=data[name], label='graph-optimization')
+    print(data)
+    print(name)
+    picture_name = data[name]['name']
+    picture_label = data[name]['label']
+    pic = LatexPictureGenerator(path=input, name=picture_name, label=picture_label)
     pic.save(output)
 
 
 if __name__ == '__main__':
-    generate_function_to_optimize() # noqa
+    generate_picture() # noqa

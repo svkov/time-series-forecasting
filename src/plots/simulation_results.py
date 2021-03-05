@@ -36,11 +36,12 @@ def simulation_results(input, output, budget, logs):
     results = {
         'ticker': tickers,
         'models': models,
-        'start_budget': [budget for _ in range(len(tickers))],
+        'start budget': [budget for _ in range(len(tickers))],
         'budget': caps,
         'profit': profits
     }
     results = pd.DataFrame(results)
+    results.set_index('ticker', inplace=True)
     results.to_csv(output)
 
 
