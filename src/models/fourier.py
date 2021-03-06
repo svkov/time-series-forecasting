@@ -4,7 +4,7 @@ import numpy as np
 
 from numpy import fft
 
-from src.utils import get_grid_from_dict, get_nmape, transform_date_start
+from src.utils import get_grid_from_dict, get_nmape, substract_n_days
 
 from src.models.model import Model
 
@@ -95,8 +95,8 @@ class Fourier(Model):
     #     return pd.DataFrame(preds, columns=columns, index=index)
 
     def get_index_for_report(self, df, date_start, date_end):
-        date_start_report = transform_date_start(date_start, self.n)
-        date_end_report = transform_date_start(date_end, self.n)
+        date_start_report = substract_n_days(date_start, self.n)
+        date_end_report = substract_n_days(date_end, self.n)
         return df[date_start_report:date_end_report].index
 
     def get_columns_for_report(self):

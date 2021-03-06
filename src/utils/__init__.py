@@ -38,21 +38,6 @@ def mean_absolute_percentage_error(y_true, y_pred):
     """
     return np.mean(np.abs(percentage_error(np.asarray(y_true), np.asarray(y_pred)))) * 100
 
-
-def filename_to_name(filename):
-    petrolium_name = {
-        'ai92': 'АИ-92',
-        'ai95': 'АИ-95',
-        'mzt': 'Мазут',
-        'ts': 'ТС-1',
-        'dt': 'ДТ',
-        'onpz': 'ОНПЗ',
-        'mnpz': 'МНПЗ',
-        'yanos': 'ЯНОС'
-    }
-    return ' '.join(list(map(lambda x: petrolium_name[x], filename.split('_')[:2])))
-
-
 def exponential_smoothing(df, column, alpha=0.7):
     series = df[column]
     result = [series.iloc[0]]
@@ -63,7 +48,7 @@ def exponential_smoothing(df, column, alpha=0.7):
     return df_new
 
 
-def transform_date_start(date_start: str, n) -> datetime:
+def substract_n_days(date_start: str, n) -> datetime:
     """
     Вычитает n дней из date_start
 
@@ -81,9 +66,6 @@ def read_pred_csv(path, n):
 
 def get_nmape(ntest, npred):
     assert ntest.shape == npred.shape, f'Pred and test must have equal shapes, given {ntest.shape}, {npred.shape}'
-    # if len(ntest) > len(npred):
-    #     ntest = ntest[len(ntest) - len(npred):]
-
     mape = []
     for i in range(len(npred)):
         pred_i = npred[i]
@@ -162,8 +144,8 @@ def prepare_test_dataframe(df, date_start, date_end, n):
         tests.append(test)
     tests = np.array(tests)
 
-    date_start = transform_date_start(date_start, n)
-    date_end = transform_date_start(date_end, n)
+    date_start = substract_n_days(date_start, n)
+    date_end = substract_n_days(date_end, n)
     index = df.loc[date_start:date_end].index
 
     columns = [f'n{i + 1}' for i in range(n)]
@@ -182,13 +164,3 @@ def send_to_telegram_if_fails(func, *args, **kwargs):
             raise e
 
     return wrapper
-
-
-def save_plotly_fig(fig, path):
-    fig.write_image(path)
-
-
-def read_yaml(path):
-    with open(path, encoding='utf-8') as file:
-        data = yaml.load(file)
-    return data

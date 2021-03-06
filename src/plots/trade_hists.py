@@ -2,8 +2,8 @@ import click
 import plotly.graph_objects as go
 
 from src.trade.prepare_data import read_data, make_labels, prepare_data_without_window
-from src.utils import save_plotly_fig
 from src.utils.click_commands import InputCommand
+from src.utils.file import save_plotly_fig
 
 
 @click.command(cls=InputCommand)

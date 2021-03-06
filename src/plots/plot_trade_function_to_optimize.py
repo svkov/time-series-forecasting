@@ -3,9 +3,10 @@ import numpy as np
 import pandas as pd
 
 from src.trade.prepare_data import read_data, get_imbalance_by_thresh
-from src.utils import save_plotly_fig
 from src.utils.click_commands import InputCommand
 import plotly.express as px
+
+from src.utils.file import save_plotly_fig
 
 
 @click.command(cls=InputCommand)

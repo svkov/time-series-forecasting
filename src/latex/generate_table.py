@@ -2,7 +2,7 @@ import click
 
 from src.latex import Config
 from src.latex.latex_generator import LatexTableGenerator
-from src.utils import send_to_telegram_if_fails, read_yaml
+from src.utils import send_to_telegram_if_fails
 from src.utils.click_commands import LatexPictureCommand
 
 

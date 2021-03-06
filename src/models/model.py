@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.utils import transform_date_start
+from src.utils import substract_n_days
 
 
 class Model:
@@ -24,8 +24,8 @@ class Model:
             signal = df.loc[:pivot].dropna()
             pred = self.__class__(signal, n=self.n, column_name=self.column_name, **self.params).predict(signal)
             self.insert_to_dict(preds, [self.column_name], pred)
-        date_start = transform_date_start(date_start, self.n)
-        date_end = transform_date_start(date_end, self.n)
+        date_start = substract_n_days(date_start, self.n)
+        date_end = substract_n_days(date_end, self.n)
         dates = pd.date_range(date_start, date_end)
         return pd.DataFrame(preds, index=dates)
 

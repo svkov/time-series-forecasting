@@ -2,7 +2,7 @@ import pmdarima as pmd
 import pandas as pd
 
 from src.models.model import Model
-from src.utils import transform_date_start
+from src.utils import substract_n_days
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -58,8 +58,8 @@ def arima_predict_for_report(df, start_date, end_date, n, column_name):
 
     columns = [f'{column_name} n{i + 1}' for i in range(n)]
 
-    date_start = transform_date_start(start_date, n)
-    date_end = transform_date_start(end_date, n)
+    date_start = substract_n_days(start_date, n)
+    date_end = substract_n_days(end_date, n)
     index = pd.date_range(date_start, date_end)
 
     return pd.DataFrame(predictions, columns=columns, index=index)

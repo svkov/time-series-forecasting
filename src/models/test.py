@@ -3,7 +3,7 @@ from datetime import timedelta
 from src.models.model import Model
 import pandas as pd
 
-from src.utils import transform_date_start
+from src.utils import substract_n_days
 
 
 class Test(Model):
@@ -33,8 +33,8 @@ class Test(Model):
             signal = df.loc[pivot:pivot + timedelta(days=self.n - 1)].dropna().values
             preds.append(signal)
 
-        date_start = transform_date_start(date_start, self.n)
-        date_end = transform_date_start(date_end, self.n)
+        date_start = substract_n_days(date_start, self.n)
+        date_end = substract_n_days(date_end, self.n)
         # dates = df[date_start:date_end].index
         dates = pd.date_range(date_start, date_end)
         columns = [f'{self.column_name} n{i + 1}' for i in range(self.n)]

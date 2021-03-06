@@ -3,7 +3,7 @@ import pandas as pd
 from numpy.linalg import LinAlgError
 from statsmodels.tsa.api import VAR
 from src.models.model import Model
-from src.utils import transform_date_start
+from src.utils import substract_n_days
 
 
 class MyVAR(Model):

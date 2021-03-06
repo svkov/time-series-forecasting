@@ -2,8 +2,7 @@ import click
 
 from src.latex import Config
 from src.latex.latex_generator import LatexPictureGenerator
-from src.utils import read_yaml
-from src.utils.click_commands import InputCommand, LatexPictureCommand
+from src.utils.click_commands import LatexPictureCommand
 
 
 @click.command(cls=LatexPictureCommand)

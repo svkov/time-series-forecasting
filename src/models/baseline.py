@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from src.utils import transform_date_start
+from src.utils import substract_n_days
 from src.models.model import Model
 
 

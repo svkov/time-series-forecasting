@@ -3,6 +3,7 @@ import os
 import pandas as pd
 
 from src.utils import send_to_telegram_if_fails
+from src.utils.click_commands import InputCommand
 
 
 def filename_without_extension(path_to_file):
@@ -34,10 +35,8 @@ def aggregate_to_processed(files) -> pd.DataFrame:
 
 
 @send_to_telegram_if_fails
-@click.command()
-@click.option('--input')
-@click.option('--output')
-def process(input, output):
+@click.command(cls=InputCommand)
+def process(input, output, **kwargs):
     files = input.split()
     df = aggregate_to_processed(files)
     df.to_csv(output)

@@ -1,13 +1,12 @@
+import json
+
 import click
 import pandas as pd
-import json
-from sklearn.metrics import accuracy_score
-import plotly.express as px
 import plotly.graph_objects as go
-import os
-import sys
-from src.utils import save_plotly_fig
+from sklearn.metrics import accuracy_score
+
 from src.utils.click_commands import InputCommand
+from src.utils.file import save_plotly_fig
 
 
 def open_json(path):

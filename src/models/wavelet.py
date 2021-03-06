@@ -5,7 +5,7 @@ import pywt
 from sklearn.metrics import mean_absolute_error
 
 from src.models.fourier import get_predict
-from src.utils import train_test_split, get_grid_from_dict, transform_date_start
+from src.utils import train_test_split, get_grid_from_dict, substract_n_days
 from src.models.model import Model
 
 

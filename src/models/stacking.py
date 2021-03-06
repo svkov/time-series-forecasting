@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from src.utils import prepare_test_dataframe, transform_date_start
+from src.utils import prepare_test_dataframe, substract_n_days
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 from src.models.model import Model
@@ -91,7 +91,7 @@ class StackingInputValidator:
         return self.preprocess_date(self.test.index[-1])
 
     def preprocess_date(self, date: pd.Timestamp) -> pd.Timestamp:
-        return pd.Timestamp(transform_date_start(date.strftime('%Y-%m-%d'), self.get_n()))
+        return pd.Timestamp(substract_n_days(date.strftime('%Y-%m-%d'), self.get_n()))
 
     @property
     def any_prediction(self) -> pd.DataFrame:
@@ -148,7 +148,7 @@ class StackingInputValidator:
         """
         if not isinstance(date, str):
             date = date.strftime('%Y-%m-%d')
-        return pd.Timestamp(transform_date_start(date, -n))
+        return pd.Timestamp(substract_n_days(date, -n))
 
     @staticmethod
     def predictions_to_array(predictions) -> np.ndarray:

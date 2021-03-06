@@ -2,6 +2,7 @@ import click
 import pandas as pd
 
 from src.utils import send_to_telegram_if_fails
+from src.utils.click_commands import InputCommand
 
 
 def raw_to_interim(df):
@@ -14,10 +15,8 @@ def raw_to_interim(df):
 
 
 @send_to_telegram_if_fails
-@click.command()
-@click.option('--input')
-@click.option('--output')
-def interim_data(input, output):
+@click.command(cls=InputCommand)
+def interim_data(input, output, **kwargs):
     df = pd.read_csv(input, index_col='Date', parse_dates=True)
     df = raw_to_interim(df)
     df.to_csv(output)
