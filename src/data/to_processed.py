@@ -5,34 +5,32 @@ import pandas as pd
 from src.utils import send_to_telegram_if_fails
 
 
-def path_to_file_to_key(path_to_file):
+def filename_without_extension(path_to_file):
     filename = os.path.split(path_to_file)[-1]
     return os.path.splitext(filename)[0]
 
 
-def read_data(files):
+def read_dir_csv(files, index_col):
     data = {}
     for file in files:
-        df = pd.read_csv(file, index_col='Date', parse_dates=True)
-        key = path_to_file_to_key(file)
+        df = pd.read_csv(file, index_col=index_col, parse_dates=True)
+        key = filename_without_extension(file)
         data[key] = df
     return data
 
 
-def transform_data(data):
+def transform_interim_to_processed(data):
     res = pd.DataFrame()
+    needed_columns = ['Open', 'Close', 'High', 'Low', 'Volume']
     for key, df in data.items():
-        res[f'{key} Open'] = df['Open']
-        res[f'{key} Close'] = df['Close']
-        res[f'{key} High'] = df['High']
-        res[f'{key} Low'] = df['Low']
-        res[f'{key} Volume'] = df['Volume']
+        for column in needed_columns:
+            res[f'{key} {column}'] = df[column]
     return res
 
 
-def aggregate(files) -> pd.DataFrame:
-    data = read_data(files)
-    return transform_data(data)
+def aggregate_to_processed(files) -> pd.DataFrame:
+    data = read_dir_csv(files, index_col='Date')
+    return transform_interim_to_processed(data)
 
 
 @send_to_telegram_if_fails
@@ -41,7 +39,7 @@ def aggregate(files) -> pd.DataFrame:
 @click.option('--output')
 def process(input, output):
     files = input.split()
-    df = aggregate(files)
+    df = aggregate_to_processed(files)
     df.to_csv(output)
 
 

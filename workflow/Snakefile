@@ -9,22 +9,27 @@ include: 'rules\\latex.smk' # noqa
 
 rule all:
     input:
+        # Data processing
         download=expand('data\\raw\\data_{ticker}.csv', ticker=config['tickers']),
-        dag='dag.svg',
+        processed='data\\processed\\all.csv',
         figures_raw=expand('reports\\figures_raw\\{ticker}.png', ticker=config['tickers']),
+
+        # forecasting
         aggregated=expand('reports\\forecast\\aggregated\\{ticker}.csv', ticker=config['tickers']),
         forecast_figures=expand('reports\\forecast\\figures\\{ticker}.png', ticker=config['tickers']),
+        forecast_metrics='reports\\forecast\\metrics\\best\\metrics.csv',
+        # Uncomment when nn will be done
+        # nn=expand('reports\\forecast\\nn_{ticker}.csv', ticker=config['tickers'])
+
+        # Trade simulation (classification)
         processed_trade=expand('data\\processed\\trade\\{ticker}.csv', ticker=config['tickers']),
         trade_window_sizes=expand('reports\\trade\\window_sizes\\{ticker}.json', ticker=config['tickers']),
         trade_forecast=expand('reports\\trade\\forecast\\{ticker}.json', ticker=config['tickers']),
         trade_figures_accuracy=expand('reports\\trade\\figures_accuracy\\{ticker}.png', ticker=config['tickers']),
         trade_simulation='reports\\trade\\simulation\\result.csv',
-        processed='data\\processed\\all.csv',
+
         final='spbu_diploma\\main_example.pdf',
-        forecast_metrics='reports\\forecast\\metrics\\best\\metrics.csv',
-        trade_hist='reports\\trade\\figures\\hist.png',
-        imbalance_plots='reports\\trade\\figures\\function_to_optimize.png',
-        # nn=expand('reports\\forecast\\nn_{ticker}.csv', ticker=config['tickers'])
+        dag='dag.svg', # TODO: build correct dag
     log: 'logs/all.log'
     conda: 'envs/default.yaml'
     shell:

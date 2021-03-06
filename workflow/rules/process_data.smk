@@ -1,7 +1,7 @@
 
 
 rule interim:
-    input: i=rules.download_yahoo.input
+    input: rules.download_yahoo.input
     # input: 'data\\raw\\data_{ticker}.csv'
     output: 'data\\interim\\{ticker}.csv'
     log: 'logs\\interim\\{ticker}.log'
