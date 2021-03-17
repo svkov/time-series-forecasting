@@ -12,8 +12,8 @@ latex_tickers:
 result_table:
   name: 'Результаты'
   label: 'results_table'
-  index_width: 2.8
-  columns_width: 1.8
+  index_width: 2.6
+  columns_width: 1.5
 tickers:
   name: 'Биржевые показатели, взятые для анализа'
   label: 'ticker_table'

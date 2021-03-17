@@ -21,10 +21,10 @@ def get_simulation_results(df_window, cap=1000):
     return res, best_res
 
 
-def add_results_to_df(df_window, window_len, model_type='logistic'):
+def add_results_to_df(df_window, window_len, model_type='logistic', **kwargs):
     train, test = train_test_split(df_window, train_size=0.9)
     x_train, x_test, y_train, y_test = get_x_y_train_test(train, test, window_len)
-    model = fit_model(x_train, y_train, model_type)
+    model = fit_model(x_train, y_train, model_type, **kwargs)
     y_pred = model.predict(x_test)
     print('Accuracy:', accuracy_score(y_pred, y_test))
     df_window['predicted_label'] = pd.Series(y_pred, index=df_window.index[-y_pred.shape[0]:])

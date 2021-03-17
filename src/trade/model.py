@@ -1,6 +1,7 @@
 import warnings
 
 import pandas as pd
+from sklearn.dummy import DummyClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression, RidgeClassifier
 from sklearn.metrics import accuracy_score
@@ -11,6 +12,7 @@ models = {
     'logistic': LogisticRegression,
     'random_forest': RandomForestClassifier,
     'ridge': RidgeClassifier,
+    'dummy': DummyClassifier
 }
 
 
@@ -90,14 +92,14 @@ def get_cv_train_test(df, train_size=0.9):
         yield train, test
 
 
-def get_accuracy(train, test, window_len, model_type='logistic'):
-    y_pred, y_test = fit_predict(train, test, window_len, model_type)
+def get_accuracy(train, test, window_len, model_type='logistic', **kwargs):
+    y_pred, y_test = fit_predict(train, test, window_len, model_type, **kwargs)
     return accuracy_score(y_pred, y_test)
 
 
-def fit_predict(train, test, window_len, model_type='logistic'):
+def fit_predict(train, test, window_len, model_type='logistic', **kwargs):
     x_train, x_test, y_train, y_test = get_x_y_train_test(train, test, window_len)
-    model = fit_model(x_train, y_train, model_type)
+    model = fit_model(x_train, y_train, model_type, **kwargs)
     y_pred = model.predict(x_test)
     return y_pred, y_test
 
@@ -109,16 +111,18 @@ def get_x_y_train_test(train, test, window_len):
     return x_train, x_test, y_train, y_test
 
 
-def fit_model(x_train, y_train, model_type='logistic'):
-    model = get_model(model_type)
+def fit_model(x_train, y_train, model_type='logistic', **kwargs):
+    model = get_model(model_type, **kwargs)
     model.fit(x_train, y_train)
     return model
 
 
-def get_model(model_type='logistic'):
+def get_model(model_type='logistic', **kwargs):
     if model_type not in models:
         raise ValueError(f'Invalid model "{model_type}" requested. Available models: {get_model_names()}')
-    return models[model_type]()
+    if model_type == 'dummy':
+        return models[model_type](strategy='uniform')
+    return models[model_type](**kwargs)
 
 
 def get_model_names():
