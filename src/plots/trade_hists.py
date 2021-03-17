@@ -10,7 +10,7 @@ from src.utils.file import save_plotly_fig
 @click.option('--n')
 @click.option('--instrument')
 @click.option('--thresh')
-def trade_hists(input, output, n, instrument, thresh):
+def trade_hists(input, output, n, instrument, thresh, **kwargs):
     n = int(n)
     thresh = float(thresh)
     df1 = read_data(input)

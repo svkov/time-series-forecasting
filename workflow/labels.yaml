@@ -12,6 +12,8 @@ latex_tickers:
 result_table:
   name: 'Результаты'
   label: 'results_table'
+  index_width: 2.8
+  columns_width: 1.8
 tickers:
   name: 'Биржевые показатели, взятые для анализа'
   label: 'ticker_table'
@@ -19,9 +21,14 @@ tickers:
   columns_width: 10
 
 simulation_results:
-  name: 'Тест'
+  name: 'Результаты симуляции биржевых торгов'
   label: 'simulation_results_table'
+  index_width: 4
 
 figures_accuracy:
   name: 'Точность модели определения направления цены'
   label: 'figures_accuracy'
+
+BTC-USD:
+  name: 'Цена биткоина в долларах'
+  label: 'btc-usd'

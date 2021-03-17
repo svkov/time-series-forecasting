@@ -18,6 +18,10 @@ class Config:
 
     def get(self, param, default):
         try:
-            return self.data[self.name].get(param, default)
+            data = self.data[self.name]
         except:
-            raise KeyError(f'В workflow/label.yaml нет ключа {self.name}, либо у него нет параметра {param}')
+            raise KeyError(f'В workflow/labels.yaml нет ключа {self.name}')
+        try:
+            return data.get(param, default)
+        except:
+            raise KeyError(f'В workflow/labels.yaml в {self.name} нет параметра {param}')

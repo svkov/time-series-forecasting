@@ -22,7 +22,7 @@ rule forecast_stacking:
     input:
         all=rules.processed.output,
         # to be sure that all predictions are generated
-        models=rules.forecast_model.output
+        models=expand('reports\\forecast\\models\\{model}\\{{ticker}}.csv', model=config['models'])
     output: 'reports\\forecast\\stacking\\{ticker}.csv'
     params:
         models=config['models'],

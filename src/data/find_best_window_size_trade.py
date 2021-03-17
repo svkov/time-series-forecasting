@@ -8,7 +8,7 @@ from src.trade.model import choose_best_window_size
 def best_window_size(df, n, model_types):
     values = {}
     for model_type in model_types:
-        acc, window = choose_best_window_size(df, n, model_type)
+        acc, window = choose_best_window_size(df, n, model_type=model_type)
         values[model_type] = {'accuracy': acc, 'window': window}
     return values
 

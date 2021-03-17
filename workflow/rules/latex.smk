@@ -6,7 +6,8 @@ shell_template = 'python -m src.latex.{} --input {} --output {} --name {} --labe
 
 
 figures_template = 'reports\\forecast\\figures\\{}.png'
-figures_forecast = {ticker: figures_template.format(ticker) for ticker in config['tickers']}
+# figures_forecast = {ticker: figures_template.format(ticker) for ticker in config['tickers']}
+figures_forecast = {ticker: figures_template.format(ticker) for ticker in ['BTC-USD']}
 
 pictures = {
     'function_to_optimize': 'reports\\trade\\figures\\function_to_optimize.png',
