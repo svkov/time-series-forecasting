@@ -1,34 +1,41 @@
 # latex
 
+# FIGURES
+
 balance_hist:
   name: 'Диаграмма сбалансированности классов'
-  label: 'balance_hist'
+  label: 'fig:balance_hist'
+
 function_to_optimize:
   name: 'Функция для оптимизации'
-  label: 'function_to_optimize'
+  label: 'fig:function_to_optimize'
+
 latex_tickers:
   name: 'Какое-то название'
-  label: 'graph_raw'
+  label: 'fig:graph_raw'
+
+figures_accuracy:
+  name: 'Точность модели определения направления цены'
+  label: 'fig:figures_accuracy'
+
+BTC-USD:
+  name: 'Цена биткоина в долларах'
+  label: 'fig:btc-usd'
+
+# TABLES
 result_table:
   name: 'Результаты'
-  label: 'results_table'
+  label: 'tab:results_table'
   index_width: 2.6
   columns_width: 1.5
+
 tickers:
   name: 'Биржевые показатели, взятые для анализа'
-  label: 'ticker_table'
+  label: 'tab:ticker_table'
   index_width: 6
   columns_width: 10
 
 simulation_results:
   name: 'Результаты симуляции биржевых торгов'
-  label: 'simulation_results_table'
+  label: 'tab:simulation_results_table'
   index_width: 4
-
-figures_accuracy:
-  name: 'Точность модели определения направления цены'
-  label: 'figures_accuracy'
-
-BTC-USD:
-  name: 'Цена биткоина в долларах'
-  label: 'btc-usd'
