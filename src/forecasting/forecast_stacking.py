@@ -30,6 +30,7 @@ def forecast_stacking(input, output, logs, input_all, models, ticker):
     df = pd.read_csv(input_all, parse_dates=True, index_col=0)
     test_df = pd.DataFrame()
     test_df['price'] = df[f'{ticker} Close']
+    print(data)
     model = Stacking(test_df, *data)
 
     pred = model.predict_for_report(test_df, *data)

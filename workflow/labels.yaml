@@ -19,7 +19,7 @@ figures_accuracy:
   label: 'fig:figures_accuracy'
 
 BTC-USD:
-  name: 'Цена биткоина в долларах'
+  name: 'Цена биткоина в долларах. На легенде числа обозначают точность модели (MAE)'
   label: 'fig:btc-usd'
 
 # TABLES

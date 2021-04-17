@@ -13,7 +13,7 @@ class Config:
 
     def read_yaml(self):
         with open(self.path, encoding='utf-8') as file:
-            data = yaml.load(file)
+            data = yaml.load(file, Loader=yaml.FullLoader)
         return data
 
     def get(self, param, default):
