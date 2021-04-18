@@ -29,7 +29,6 @@ rule all:
         trade_simulation='reports\\trade\\simulation\\result.csv',
 
         final='spbu_diploma\\main_example.pdf',
-#         dag='dag.svg', # TODO: build correct dag
     log: 'logs/all.log'
     conda: 'envs/default.yaml'
     shell:
