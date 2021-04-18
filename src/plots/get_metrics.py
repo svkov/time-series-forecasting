@@ -1,5 +1,6 @@
 import click
 import pandas as pd
+import numpy as np
 import os
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from src.plots import get_results
@@ -9,7 +10,8 @@ from src.utils.click_commands import InputCommand
 metrics_map = {
     'MAE': mean_absolute_error,
     'MAPE': mean_absolute_percentage_error,
-    'MSE': mean_squared_error
+    'MSE': mean_squared_error,
+    'RMSE': lambda x, y: np.sqrt(mean_squared_error(x, y))
 }
 
 

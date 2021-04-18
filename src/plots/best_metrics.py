@@ -1,6 +1,8 @@
 import pandas as pd
 import click
 import os
+
+import telegram.error
 import telegram_send
 
 from src.utils.click_commands import InputCommand
@@ -32,7 +34,11 @@ def best_metrics(input, output, logs):
             parsed_df = pd.DataFrame(parsed_row, index=[ticker])
             full_df = full_df.append(parsed_df)
 
-    send_df_to_telegram(full_df)
+    try:
+        send_df_to_telegram(full_df)
+    except telegram.error.NetworkError:
+        print('Internet connection trouble')
+        pass
     full_df.to_csv(output)
 
 
