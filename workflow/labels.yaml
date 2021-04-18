@@ -39,3 +39,4 @@ simulation_results:
   name: 'Результаты симуляции биржевых торгов'
   label: 'tab:simulation_results_table'
   index_width: 4
+  columns_width: 1.7
