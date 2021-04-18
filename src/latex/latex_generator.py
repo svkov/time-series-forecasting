@@ -39,11 +39,12 @@ class LatexGenerator:
 
 class LatexPictureGenerator(LatexGenerator):
 
-    def __init__(self, content='', path=None, name=None, label=None, windows_path=True, **kwargs):
+    def __init__(self, content='', path=None, name=None, label=None, windows_path=True, scale=0.6, **kwargs):
         super().__init__(content, **kwargs)
         self.path = path
         self.name = name
         self.label = label
+        self.scale = scale
 
         if windows_path:
             self._windows_path_to_tex()
@@ -56,7 +57,7 @@ class LatexPictureGenerator(LatexGenerator):
 
         \\begin{{figure}}[ht]
         \\begin{{center}}
-        \\scalebox{{0.4}}{{
+        \\scalebox{{{self.scale}}}{{
            \\includegraphics{{{self.path}}}
         }}
 
