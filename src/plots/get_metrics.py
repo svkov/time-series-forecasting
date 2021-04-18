@@ -27,7 +27,7 @@ def get_metrics_df(results, metrics_list):
             metrics_dict[model].append(metric_value)
 
     metrics_df = pd.DataFrame(metrics_dict, index=index)
-    metrics_df.index.name = 'Metric'
+    metrics_df.index.name = 'metric'
     return metrics_df
 
 

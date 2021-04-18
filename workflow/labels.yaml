@@ -26,8 +26,8 @@ BTC-USD:
 result_table:
   name: 'Результаты'
   label: 'tab:results_table'
-  index_width: 2.6
-  columns_width: 1.5
+  index_width: 2.7
+  columns_width: 1.7
 
 tickers:
   name: 'Биржевые показатели, взятые для анализа'
