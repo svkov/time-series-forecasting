@@ -2,10 +2,10 @@ import os
 import subprocess
 
 
-def generate():
+def generate(*args):
     with open(os.devnull, 'wb') as devnull:
         # subprocess.check_call(['pdflatex', 'main_example.tex'], stdout=devnull, stderr=subprocess.STDOUT)
-        subprocess.check_call(['pdflatex', 'main_example.tex'])
+        subprocess.check_call([*args])
 
 
 def main():
@@ -15,9 +15,16 @@ def main():
     """
     os.chdir('spbu_diploma/')
     n = 3
-    for i in range(n):
-        generate()
-        print(f'compile [{i + 1}/{n}] times')
+    generate('pdflatex', 'main_example.tex')
+    try:
+        generate('biber', 'main_example')
+    except:
+        pass
+    generate('pdflatex', 'main_example.tex')
+
+    # for i in range(n):
+    #     generate()
+    #     print(f'compile [{i + 1}/{n}] times')
 
 
 if __name__ == '__main__':

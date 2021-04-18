@@ -6,6 +6,11 @@
 % (понятия "глава" и "параграф" из стандарта)
 \documentclass[a4paper,article,14pt]{extarticle}
 
+\usepackage{etoolbox}
+\cslet{blx@noerroretextools}\empty
+\usepackage[backend=biber]{biblatex}
+%\usepackage{autonum}
+
 % Подключаем главный пакет со всем необходимым
 \usepackage{spbudiploma}
 
@@ -24,6 +29,9 @@
 \usepackage{comment}
 \usepackage{svg}
 
+
+
+\addbibresource{bibliography.bib}
 
 \begin{document}
 
@@ -613,28 +621,33 @@ class_i =
 Можно провести сентимент-анализ сообщений в Twitter, и использовать полученные результаты как экзогенные признаки для модели Stacking.
 
 \pagebreak
+
+\printbibliography
 % Библиография в cpsconf стиле
 % Аргумент {1} ниже включает переопределенный стиль с выравниванием слева
-\begin{thebibliography}{1}
-\bibitem{ts25} J.G. De Gooijer, R.J. Hyndman, 25 years of time series forecasting, Int. J. Forecast. 22 (3) (2006) 443–473.
-\bibitem{box} G.E.P. Box, G. Jenkins, Time Series Analysis, Forecasting and Control, Holden-Day, San Francisco, CA (1970)
-\bibitem{expsmooth} Forecasting Sales by Exponentially Weighted Moving Averages, Peter R. Winters
-\bibitem{ar} Fitting autoregressive models for prediction, H Akaike - Annals of the institute of Statistical Mathematics, 1969 - Springer
-\bibitem{firstnn} Lapedes, A, and Farber, R. Nonlinear signal processing using neural networks: Prediction and system modelling. United States: N. p., 1987. Web.
-\bibitem{lstm} LSTM Neural Networks for Language Modeling, Martin Sundermeyer, Ralf Schlüter, Hermann Ney, 2012
-\bibitem{lstm_ex1} Applying LSTM to Time Series Predictable Through Time-Window Approaches, Felix A. GersDouglas EckJürgen Schmidhuber
-\bibitem{lstm_ex2} Financial time series forecasting model based on CEEMDAN and LSTM, Jian Cao, Zhi Li, Jian Li, 2018
-\bibitem{lstm_ex3} A Comparison of ARIMA and LSTM in Forecasting Time Series, Sima Siami-Namini, Neda Tavakoli, Akbar Siami Namin
-\bibitem{ensemble_dl} Ensemble deep learning for regression and time series forecasting, Xueheng Qiu; Le Zhang; Ye Ren; P. N. Suganthan; Gehan Amaratunga, 2014
-\bibitem{ensemble_agri} Ensemble approach based on bagging, boosting and stacking for short-term prediction in agribusiness time series, Matheus Henrique Dal Molin Ribeiro, Leandro dos Santos Coelho, 2020
-\bibitem{arima} Магнус Я. Р., Катышев П. К., Пересецкий А. А. Эконометрика. Начальный курс.. М.: Дело, 2004. 576 с.
-\bibitem{var} Носко В.П. Эконометрика. Введение в регрессионный анализ временных рядов
-\bibitem{snakemake} Köster, Johannes and Rahmann, Sven. “Snakemake - A scalable bioinformatics workflow engine”. Bioinformatics 2012.
-\bibitem{wavelet} Wang, F.; Yu, Y.; Zhang, Z.; Li, J.; Zhen, Z.; Li, K. Wavelet Decomposition and Convolutional LSTM Networks Based Improved Deep Learning Model for Solar Irradiance Forecasting. Appl. Sci. 2018, 8, 1286.
-\bibitem{yahoo} Yahoo Finance [Электронный ресурс] // Yahoo Finance. \url{URL:  https://finance.yahoo.com/} (дата обращения: 20.12.2020).
-\bibitem{my_arima_article} Ковалев С.С. Прогнозирование средневзвешенной цены торгов нефтепродуктами на бирже классическими методами анализа временных рядов. // Процессы управления и устойчивость. 2020. №51.
-\bibitem{pywt} Gregory R. Lee, Ralf Gommers, Filip Wasilewski, Kai Wohlfahrt, Aaron O’Leary (2019). PyWavelets: A Python package for wavelet analysis. Journal of Open Source Software, 4(36), 1237
-\bibitem{luigi} https://github.com/spotify/luigi
-\bibitem{airflow} https://airflow.apache.org/
-\end{thebibliography}
+\begin{comment}
+    \begin{thebibliography}{1}
+    \bibitem{ts25} J.G. De Gooijer, R.J. Hyndman, 25 years of time series forecasting, Int. J. Forecast. 22 (3) (2006) 443–473.
+    \bibitem{box} G.E.P. Box, G. Jenkins, Time Series Analysis, Forecasting and Control, Holden-Day, San Francisco, CA (1970)
+    \bibitem{expsmooth} Forecasting Sales by Exponentially Weighted Moving Averages, Peter R. Winters
+    \bibitem{ar} Fitting autoregressive models for prediction, H Akaike - Annals of the institute of Statistical Mathematics, 1969 - Springer
+    \bibitem{firstnn} Lapedes, A, and Farber, R. Nonlinear signal processing using neural networks: Prediction and system modelling. United States: N. p., 1987. Web.
+    \bibitem{lstm} LSTM Neural Networks for Language Modeling, Martin Sundermeyer, Ralf Schlüter, Hermann Ney, 2012
+    \bibitem{lstm_ex1} Applying LSTM to Time Series Predictable Through Time-Window Approaches, Felix A. GersDouglas EckJürgen Schmidhuber
+    \bibitem{lstm_ex2} Financial time series forecasting model based on CEEMDAN and LSTM, Jian Cao, Zhi Li, Jian Li, 2018
+    \bibitem{lstm_ex3} A Comparison of ARIMA and LSTM in Forecasting Time Series, Sima Siami-Namini, Neda Tavakoli, Akbar Siami Namin
+    \bibitem{ensemble_dl} Ensemble deep learning for regression and time series forecasting, Xueheng Qiu; Le Zhang; Ye Ren; P. N. Suganthan; Gehan Amaratunga, 2014
+    \bibitem{ensemble_agri} Ensemble approach based on bagging, boosting and stacking for short-term prediction in agribusiness time series, Matheus Henrique Dal Molin Ribeiro, Leandro dos Santos Coelho, 2020
+    \bibitem{arima} Магнус Я. Р., Катышев П. К., Пересецкий А. А. Эконометрика. Начальный курс.. М.: Дело, 2004. 576 с.
+    \bibitem{var} Носко В.П. Эконометрика. Введение в регрессионный анализ временных рядов
+    \bibitem{snakemake} Köster, Johannes and Rahmann, Sven. “Snakemake - A scalable bioinformatics workflow engine”. Bioinformatics 2012.
+    \bibitem{wavelet} Wang, F.; Yu, Y.; Zhang, Z.; Li, J.; Zhen, Z.; Li, K. Wavelet Decomposition and Convolutional LSTM Networks Based Improved Deep Learning Model for Solar Irradiance Forecasting. Appl. Sci. 2018, 8, 1286.
+    \bibitem{yahoo} Yahoo Finance [Электронный ресурс] // Yahoo Finance. \url{URL:  https://finance.yahoo.com/} (дата обращения: 20.12.2020).
+    \bibitem{my_arima_article} Ковалев С.С. Прогнозирование средневзвешенной цены торгов нефтепродуктами на бирже классическими методами анализа временных рядов. // Процессы управления и устойчивость. 2020. №51.
+    \bibitem{pywt} Gregory R. Lee, Ralf Gommers, Filip Wasilewski, Kai Wohlfahrt, Aaron O’Leary (2019). PyWavelets: A Python package for wavelet analysis. Journal of Open Source Software, 4(36), 1237
+    \bibitem{luigi} https://github.com/spotify/luigi
+    \bibitem{airflow} https://airflow.apache.org/
+    \end{thebibliography}
+\end{comment}
+
 \end{document}
