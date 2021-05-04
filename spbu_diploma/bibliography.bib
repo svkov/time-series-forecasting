@@ -1,121 +1,214 @@
 %! Author = koval
 %! Date = 18.04.2021
 
+
 @article{ts25,
-    author = {J.G. De Gooijer and R.J. Hyndman},
     title = {25 years of time series forecasting},
-    journal = {Int. J. Forecast. 22 (3)},
+    journal = {International Journal of Forecasting},
+    volume = {22},
+    number = {3},
+    pages = {443-473},
     year = {2006},
+    note = {Twenty five years of forecasting},
+    issn = {0169-2070},
+    doi = {https://doi.org/10.1016/j.ijforecast.2006.01.001},
+    url = {https://www.sciencedirect.com/science/article/pii/S0169207006000021},
+    author = {Jan G. {De Gooijer} and Rob J. Hyndman},
+    keywords = {Accuracy measures, ARCH, ARIMA, Combining, Count data, Densities, Exponential smoothing, Kalman filter, Long memory, Multivariate, Neural nets, Nonlinearity, Prediction intervals, Regime-switching, Robustness, Seasonality, State space, Structural models, Transfer function, Univariate, VAR},
 }
-@article{box,
-    author = {G.E.P. Box and G. Jenkins},
-    title = {Time Series Analysis, Forecasting and Control},
-    journal = {Holden-Day, San Francisco, CA},
-    year = {1970},
+
+@book{box,
+  title={Time Series Analysis: Forecasting and Control},
+  author={Box, G.E.P. and Jenkins, G.M. and WISCONSIN UNIV MADISON Dept. of STATISTICS.},
+  isbn={9780816210947},
+  lccn={lc77079534},
+  series={Holden-Day series in time series analysis and digital processing},
+  url={https://books.google.ru/books?id=5BVfnXaq03oC},
+  year={1970},
+  publisher={Holden-Day}
 }
 
 @article{expsmooth,
-    author = {Peter R. Winters},
-    title = {Forecasting Sales by Exponentially Weighted Moving Averages},
-    journal = {journal},
-    year = {year},
-}
-@article{ar,
-    author = {H Akaike},
-    title = {Fitting autoregressive models for prediction},
-    journal = {Annals of the institute of Statistical Mathematics},
-    year = {1969},
+ ISSN = {00251909, 15265501},
+ URL = {http://www.jstor.org/stable/2627346},
+ author = {Peter R. Winters},
+ journal = {Management Science},
+ number = {3},
+ pages = {324--342},
+ publisher = {INFORMS},
+ title = {Forecasting Sales by Exponentially Weighted Moving Averages},
+ volume = {6},
+ year = {1960}
 }
 
+%@article{ar,
+%    author = {H Akaike},
+%    title = {Fitting autoregressive models for prediction},
+%    journal = {Annals of the institute of Statistical Mathematics},
+%    year = {1969},
+%}
+
 @article{firstnn,
-    author = {Lapedes, A. and Farber, R.},
     title = {Nonlinear signal processing using neural networks: Prediction and system modelling},
-    journal = {United States: N. p.},
+    author = {Lapedes, A and Farber, R},
+    url = {https://www.osti.gov/biblio/5470451},
+    place = {United States},
     year = {1987},
+    month = {6}
 }
-@article{lstm,
-    author = {Martin Sundermeyer and Ralf Schlüter and Hermann Ney},
-    title = {LSTM Neural Networks for Language Modeling},
-    journal = {journal},
+
+@inproceedings{lstm,
+    author = {Sundermeyer, Martin and Schlüter, Ralf and Ney, Hermann},
     year = {2012},
+    month = {09},
+    title = {LSTM Neural Networks for Language Modeling}
 }
-@article{lstm_ex1,
-    author = {Felix A.},
-    title = {Applying LSTM to Time Series Predictable Through Time-Window Approaches},
-    journal = {GersDouglas EckJürgen Schmidhuber},
-    year = {year},
+
+@inproceedings{lstm_ex1,
+    author = {Gers, Felix and Eck, Douglas and Schmidhuber, Jürgen},
+    year = {2001},
+    month = {08},
+    pages = {669-676},
+    title = {Applying LSTM to Time Series Predictable through Time-Window Approaches},
+    isbn = {978-3-540-42486-4},
+    doi = {10.1007/3-540-44668-0_93}
 }
+
 @article{lstm_ex2,
-    author = {Jian Cao and Zhi Li and Jian Li},
     title = {Financial time series forecasting model based on CEEMDAN and LSTM},
-    journal = {journal},
-    year = {2018},
+    journal = {Physica A: Statistical Mechanics and its Applications},
+    volume = {519},
+    pages = {127-139},
+    year = {2019},
+    issn = {0378-4371},
+    doi = {https://doi.org/10.1016/j.physa.2018.11.061},
+    url = {https://www.sciencedirect.com/science/article/pii/S0378437118314985},
+    author = {Jian Cao and Zhi Li and Jian Li},
+    keywords = {Financial time series forecasting, EMD-LSTM prediction, CEEMDAN-LSTM prediction},
 }
-@article{lstm_ex3,
-    author = {Sima Siami-Namini and Neda Tavakoli and Akbar Siami Namin},
-    title = {A Comparison of ARIMA and LSTM in Forecasting Time Series},
-    journal = {journal},
-    year = {year},
+
+@INPROCEEDINGS{lstm_ex3,
+  author={Siami-Namini, Sima and Tavakoli, Neda and Siami Namin, Akbar},
+  booktitle={2018 17th IEEE International Conference on Machine Learning and Applications (ICMLA)},
+  title={A Comparison of ARIMA and LSTM in Forecasting Time Series},
+  year={2018},
+  pages={1394-1401},
+  doi={10.1109/ICMLA.2018.00227}
 }
-@article{ensemble_dl,
-    author = {Xueheng Qiu and Le Zhang and Ye Ren and P. N. Suganthan and Gehan Amaratunga},
-    title = {Ensemble deep learning for regression and time series forecasting},
-    journal = {journal},
-    year = {2014},
+
+@INPROCEEDINGS{ensemble_dl,
+  author={Qiu, Xueheng and Zhang, Le and Ren, Ye and Suganthan, P. N. and Amaratunga, Gehan},
+  booktitle={2014 IEEE Symposium on Computational Intelligence in Ensemble Learning (CIEL)},
+  title={Ensemble deep learning for regression and time series forecasting},
+  year={2014},
+  pages={1-6},
+  doi={10.1109/CIEL.2014.7015739}
 }
+
 @article{ensemble_agri,
-    author = {Matheus Henrique Dal Molin Ribeiro and Leandro dos Santos Coelho},
     title = {Ensemble approach based on bagging, boosting and stacking for short-term prediction in agribusiness time series},
-    journal = {journal},
+    journal = {Applied Soft Computing},
+    volume = {86},
+    pages = {105837},
     year = {2020},
+    issn = {1568-4946},
+    doi = {https://doi.org/10.1016/j.asoc.2019.105837},
+    url = {https://www.sciencedirect.com/science/article/pii/S1568494619306180},
+    author = {Matheus Henrique Dal Molin Ribeiro and Leandro {dos Santos Coelho}},
+    keywords = {Bagging, Boosting, Agricultural commodity, Ensemble regression, Stacking, Time series},
 }
+
 @book{arima,
     author = {Магнус Я. Р. and Катышев П. К. and Пересецкий А. А.},
     title = {Эконометрика. Начальный курс.},
-    date = {2004.},
-} % М.: Дело,  576 с.
-@article{var,
+    date = {2004},
+}
+
+@book{var,
     author = {Носко В.П.},
     title = {Эконометрика. Введение в регрессионный анализ временных рядов},
-    journal = {journal},
-    year = {year},
+    year = {2004},
+    volume = {312 страниц},
+    isbn = {5-94010-322-7},
 }
+
 @article{snakemake,
-    author = {Köster and Johannes and Rahmann and Sven.},
-    title = {Snakemake - A scalable bioinformatics workflow engine},
-    journal = {Bioinformatics },
+    author = {Köster, Johannes and Rahmann, Sven},
+    title = {Snakemake—a scalable bioinformatics workflow engine},
+    journal = {Bioinformatics},
+    volume = {28},
+    number = {19},
+    pages = {2520-2522},
     year = {2012},
+    month = {08},
+    issn = {1367-4803},
+    doi = {10.1093/bioinformatics/bts480},
+    url = {https://doi.org/10.1093/bioinformatics/bts480},
+    eprint = {https://academic.oup.com/bioinformatics/article-pdf/28/19/2520/819790/bts480.pdf},
 }
-@article{wavelet,
-    author = {Wang, F. and Yu, Y. and Zhang, Z. and Li, J. and Zhen, Z.; Li, K.},
-    title = {Wavelet Decomposition and Convolutional LSTM Networks Based Improved Deep Learning Model for Solar Irradiance Forecasting.},
-    journal = {Appl. Sci. },
-    year = {2018},
+
+
+@Article{wavelet,
+    AUTHOR = {Wang, Fei and Yu, Yili and Zhang, Zhanyao and Li, Jie and Zhen, Zhao and Li, Kangping},
+    TITLE = {Wavelet Decomposition and Convolutional LSTM Networks Based Improved Deep Learning Model for Solar Irradiance Forecasting},
+    JOURNAL = {Applied Sciences},
+    VOLUME = {8},
+    YEAR = {2018},
+    NUMBER = {8},
+    ARTICLE-NUMBER = {1286},
+    URL = {https://www.mdpi.com/2076-3417/8/8/1286},
+    ISSN = {2076-3417},
+    DOI = {10.3390/app8081286}
 }
+
 @misc{yahoo,
     url = {https://finance.yahoo.com/},
     title = {Yahoo Finance [Электронный ресурс]},
-    date = {дата обращения: 20.12.2020},
+    urldate = {2021},
+    urlmonth = {5},
+    urlday = {4},
 }
+
 @article{my_arima_article,
     author = {Ковалев С.С.},
     title = {Прогнозирование средневзвешенной цены торгов нефтепродуктами на бирже классическими методами анализа временных рядов.},
     journal = {Процессы управления и устойчивость. №51.},
     year = {2020},
 }
+
 @article{pywt,
-    author = {Gregory R. Lee and Ralf Gommers and Filip Wasilewski and Kai Wohlfahrt and Aaron O’Leary},
-    title = {PyWavelets: A Python package for wavelet analysis},
-    journal = {Journal of Open Source Software},
-    year = {2019},
-} % 4(36), 1237
+  doi = {10.21105/joss.01237},
+  url = {https://doi.org/10.21105/joss.01237},
+  year = {2019},
+  publisher = {The Open Journal},
+  volume = {4},
+  number = {36},
+  pages = {1237},
+  author = {Gregory R. Lee and Ralf Gommers and Filip Waselewski and Kai Wohlfahrt and Aaron O&amp;\#8217;Leary},
+  title = {PyWavelets: A Python package for wavelet analysis},
+  journal = {Journal of Open Source Software}
+}
+
 @misc{luigi,
     url = {https://github.com/spotify/luigi},
     title = {spotify/luigi: Luigi is a Python module that helps you build complex pipelines of batch jobs. It handles dependency resolution, workflow management, visualization etc. It also comes with Hadoop support built in.},
-    date = {дата обращения 20.12.2020},
+    urldate = {2021},
+    urlmonth = {5},
+    urlday = {4},
 }
+
 @misc{airflow,
     url = {https://airflow.apache.org/},
     title = {Apache Airflow},
-    date = {дата обращения 20.12.2020},
+    urldate = {2021},
+    urlmonth = {5},
+    urlday = {4},
+}
+
+@misc{spimex,
+    url = {https://spimex.com/},
+    title = {АО СПбМТСБ, Санкт-Петербургская Международная Товарно-сырьевая Биржа},
+    urldate = {2021},
+    urlmonth = {5},
+    urlday = {4},
 }
