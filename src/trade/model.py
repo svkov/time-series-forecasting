@@ -10,7 +10,7 @@ warnings.simplefilter("ignore")
 
 models = {
     'logistic': LogisticRegression,
-    'random_forest': RandomForestClassifier,
+    'randomforest': RandomForestClassifier,
     'ridge': RidgeClassifier,
     'dummy': DummyClassifier
 }
