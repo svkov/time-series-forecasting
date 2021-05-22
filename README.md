@@ -3,6 +3,8 @@
 
 [![Snakemake](https://img.shields.io/badge/snakemake-≥5.6.0-brightgreen.svg?style=flat)](https://snakemake.readthedocs.io)
 
+
+
 ## Описание
 
 Проект по предсказанию цены биржевых показателей. Данные взяты с Yahoo Finance (библиотека `yfinance`).
@@ -36,5 +38,9 @@
 - `snakemake -j8` - запустить генерацию pdf с дипломной работой. Параметр `j` означает количество потоков для исполнения пайплайна. 
 - После завершения можно посмотреть результат в `spbu_diploma/main_example.pdf`
 
+# Идеи, пожелания, предложения
 
+- Можно оставлять в issues
+- Или писать на почту [kovalev.svyatoslav42@gmail.com](mailto:kovalev.svyatoslav42@gmail.com?subject=[GitHub]%20time%20series%20forecast)
+  
 [localhost]: http://127.0.0.1:8050
