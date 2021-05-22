@@ -20,22 +20,21 @@
 - `spbu_diploma` - папка для хранения стилей латеха и главного файла латеха
 - `src` - python-пакет, в котором хранится вся кодовая база проекта  
 - `workflow` - папка с snakemake пайплайном
+- `data_loader` и `forecaster` - пакеты с исходным кодом web-приложения, которое предоставляет API для предсказаний.
 
 ## Установка
 - `git clone https://github.com/svkov/BitcoinForecasting.git`
-- Установить зависимости (скоро будет)
+- Установить зависимости `conda create -f environment.yml`
+- Активируем окружение `conda activate time-series-forecasting`
 
 ## Запуск
 
+
+
 ### Snakemake
 
-- `snakemake -j8` - запустить генерацию pdf с дипломной работой
+- `snakemake -j8` - запустить генерацию pdf с дипломной работой. Параметр `j` означает количество потоков для исполнения пайплайна. 
 - После завершения можно посмотреть результат в `spbu_diploma/main_example.pdf`
-
-### Приложения
-- `python main.py`
-- Идем на [http://127.0.0.1:8050][localhost]
-
 
 
 [localhost]: http://127.0.0.1:8050
