@@ -24,13 +24,15 @@ rule forecast_trade:
           'reports\\trade\\forecast\\{ticker}.json'
     params:
           n=config['n_trade'],
-          model_types=config['models_trade']
+          model_types=config['models_trade'],
+          date_start=config['date_start'],
+          date_end=config['date_end']
     log: 'logs\\forecast_trade\\{ticker}.log'
     conda: 'envs/default.yaml' # noqa
     shell:
          'python -m src.forecasting.forecast_trade_model --input {input.input}'
          ' --output {output} --window {input.window}'
-         ' --n {params.n} --model_types "{params.model_types}"'
+         ' --n {params.n} --model_types "{params.model_types}" --date_start {params.date_start} --date_end {params.date_end}'
 
 rule plot_trade_accuracy:
     input: rules.forecast_trade.output

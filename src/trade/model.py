@@ -1,3 +1,4 @@
+import datetime
 import warnings
 
 import pandas as pd
@@ -83,12 +84,16 @@ def accuracy_by_window_len_cross_valid(df, window_len, model_type='logistic'):
     return sum(accuracies) / len(accuracies)
 
 
-def get_cv_train_test(df, train_size=0.9):
+def get_cv_train_test(df, train_size=0.9, date_start=None, date_end=None, n_test=5):
     df = df.dropna()
-    start_pivot = int(len(df) * train_size)
-    for pivot in range(start_pivot, len(df)):
+    if date_start and date_end:
+        pivots = pd.date_range(date_start, date_end)
+    else:
+        start_pivot = int(len(df) * train_size)
+        pivots = range(start_pivot, len(df))
+    for pivot in pivots:
         train = df[:pivot]
-        test = df[pivot:]
+        test = df[pivot:pd.to_datetime(pivot + datetime.timedelta(days=n_test))]
         yield train, test
 
 
